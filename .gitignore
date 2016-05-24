@@ -1,0 +1,18 @@
+# Ignore configuration files that may contain sensitive information.
+*/sites/*/settings*.php
+
+# Ignore paths that contain user-generated content.
+*/sites/*/files/*
+*/sites/*/private/*
+*/sites/*/themes/*/.sass-cache/*
+tmp-files
+
+# Ignore sql dumps
+*/sites/default/sql/*
+
+# vim related
+.*.swp
+
+# project level files
+aliases.drushrc.php
+archives
