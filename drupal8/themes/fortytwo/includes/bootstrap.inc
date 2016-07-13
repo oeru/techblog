@@ -8,6 +8,8 @@
  */
 
 use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\Url;
+use \Drupal\Core\Link;
 
 require_once dirname(__FILE__) . '/fortytwo.inc';
 
@@ -25,8 +27,8 @@ function fortytwo_preprocess_html(array &$variables) {
   $classes[] = theme_get_setting('ft_layout_style');
   $classes[] = theme_get_setting('ft_layout_responsive');
 
-  $variables['page']['ft_layout_login'] = theme_get_setting('ft_layout_login');
-  if (!empty($variables['page']['ft_layout_login']) && $user->isAnonymous()) {
+  $variables['ft_layout_login'] = theme_get_setting('ft_layout_login');
+  if (!empty($variables['ft_layout_login']) && $user->isAnonymous()) {
     if (!isset($variables['attributes']['class'])) {
       $variables['attributes']['class'] = array();
     }
@@ -35,6 +37,17 @@ function fortytwo_preprocess_html(array &$variables) {
     $current_path = \Drupal::service('path.current')->getPath();
     $current_path = str_replace('/', '-', substr($current_path, 1));
     $variables['attributes']['class'][] = $current_path;
+
+    $url = Url::fromUri('https://www.flickr.com/photos/meddygarnet/', array('attributes' => array('target' => '_blank')));
+    $name = Link::fromTextAndUrl('Morgan', $url);
+
+    $url = Url::fromUri('https://www.flickr.com/photos/meddygarnet/5760264604', array('attributes' => array('target' => '_blank')));
+    $flickr = Link::fromTextAndUrl('flickr', $url);
+
+    $variables['page']['ft_credit'] = (string) t('The background image is created by %name and can be downloaded from %flickr', array(
+      '%name' => $name->toString(),
+      '%flickr' => $flickr->toString(),
+    ));
   }
 
   // Set sidebar classes.

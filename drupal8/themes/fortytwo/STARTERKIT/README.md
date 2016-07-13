@@ -54,6 +54,8 @@ styling for basic input fields and buttons.
   For example, rename the `foo/STARTERKIT.info.yml` file to `foo/foo.info.yml`. Edit the
   foo.info.yml file and change `"name = Forty Two Sub-theme Starter Kit"`. Do the same
   with the description property.
+  Make sure you also rename the libraries section `STARTERKIT/main` to `foo/main` in
+  the .info.yml file.
 
   Also rename the STARTERKIT.libraries.yml and the STARTERKIT.theme files. For example rename
   the `foo/STARTERKIT.libraries.yml` file to `foo/foo.libraries.yml` and the `foo/STARTERKIT.theme`
