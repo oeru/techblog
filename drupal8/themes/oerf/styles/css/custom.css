@@ -1,0 +1,16 @@
+/**
+ * Custom CSS
+ * Use this file to override styles if you feel uncomfortable editing
+ * component stylesheets.
+ ============================================================================ */
+
+.block-search__content { float: right; }
+#block-oerf-branding { float: left; }
+#block-oerf-main-menu { float: left; }
+.block-menu__content { float: right; }
+#block-creativecommonsnotice-3 { float: left; }
+#block-creativecommonsnotice-3 p { font-size: 70%; }
+#block-oerf-footer { float: right; }
+
+
+
