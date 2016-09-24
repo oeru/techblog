@@ -62,8 +62,13 @@ class TimelineJS extends StylePluginBase {
         'width' => ['default' => '100%'],
         'height' => ['default' => '40em'],
         'hash_bookmark' => ['default' => FALSE],
-        'start_at_end' => ['default' => FALSE],
         'scale_factor' => ['default' => 2],
+        'timenav_position' => ['default' => 'bottom'],
+        'timenav_height' => ['default' => ''],
+        'timenav_height_percentage' => ['default' => ''],
+        'timenav_mobile_height_percentage' => ['default' => ''],
+        'timenav_height_min' => ['default' => ''],
+        'start_at_end' => ['default' => FALSE],
         'language' => ['default' => ''],
       ],
     ];
@@ -78,6 +83,7 @@ class TimelineJS extends StylePluginBase {
         'caption' => ['default' => ''],
         'credit' => ['default' => ''],
         'media' => ['default' => ''],
+        'thumbnail' => ['default' => ''],
         'group' => ['default' => ''],
         'start_date' => ['default' => ''],
         'end_date' => ['default' => ''],
@@ -85,6 +91,7 @@ class TimelineJS extends StylePluginBase {
         'text' => ['default' => ''],
         'headline' => ['default' => ''],
         'background' => ['default' => ''],
+        'background_color' => ['default' => ''],
         'type' => ['default' => ''],
         'unique_id' => ['default' => ''],
       ],
@@ -113,7 +120,7 @@ class TimelineJS extends StylePluginBase {
     ];
     $form['timeline_config']['width'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Width of the timeline'),
+      '#title' => $this->t('Timeline width'),
       '#description' => $this->t('The width of the timeline, e.g. "100%" or "650px".'),
       '#default_value' => $this->options['timeline_config']['width'],
       '#size' => 10,
@@ -121,7 +128,7 @@ class TimelineJS extends StylePluginBase {
     ];
     $form['timeline_config']['height'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Height of the timeline'),
+      '#title' => $this->t('Timeline height'),
       '#description' => $this->t('The height of the timeline, e.g. "40em" or "650px".  Percent values are not recommended for the height.'),
       '#default_value' => $this->options['timeline_config']['height'],
       '#size' => 10,
@@ -138,6 +145,47 @@ class TimelineJS extends StylePluginBase {
       '#title' => $this->t('Scale factor'),
       '#description' => $this->t('How many screen widths wide the timeline should be at first presentation.'),
       '#default_value' => $this->options['timeline_config']['scale_factor'],
+    ];
+    $form['timeline_config']['timenav_position'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Timeline navigation position'),
+      '#options' => [
+        'bottom' => $this->t('Bottom'),
+        'top' => $this->t('Top'),
+      ],
+      '#default_value' => $this->options['timeline_config']['timenav_position'],
+    ];
+    $form['timeline_config']['timenav_height'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Timeline navigation height'),
+      '#description' => $this->t('The height of the timeline navigation, in pixels.  Enter an integer value.'),
+      '#default_value' => $this->options['timeline_config']['timenav_height'],
+      '#size' => 10,
+      '#maxlength' => 10,
+    ];
+    $form['timeline_config']['timenav_height_percentage'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Timeline navigation height percentage'),
+      '#description' => $this->t('The height of the timeline navigation, in percent.  Enter an integer value.  Overridden by the Timeline navigation height setting.'),
+      '#default_value' => $this->options['timeline_config']['timenav_height_percentage'],
+      '#size' => 10,
+      '#maxlength' => 10,
+    ];
+    $form['timeline_config']['timenav_mobile_height_percentage'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Timeline navigation mobile height percentage'),
+      '#description' => $this->t('The height of the timeline navigation on mobile device screens, in percent.  Enter an integer value.'),
+      '#default_value' => $this->options['timeline_config']['timenav_mobile_height_percentage'],
+      '#size' => 10,
+      '#maxlength' => 10,
+    ];
+    $form['timeline_config']['timenav_height_min'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Timeline navigation height minimum'),
+      '#description' => $this->t('The minimum height of the timeline navigation, in pixels.  Enter an integer value.'),
+      '#default_value' => $this->options['timeline_config']['timenav_height_min'],
+      '#size' => 10,
+      '#maxlength' => 10,
     ];
     $form['timeline_config']['start_at_end'] = [
       '#type' => 'checkbox',
@@ -185,7 +233,6 @@ class TimelineJS extends StylePluginBase {
       '#type' => 'select',
       '#options' => $view_fields_labels,
       '#title' => $this->t('Headline'),
-      '#required' => TRUE,
       '#description' => $this->t('The selected field may contain any text, including HTML markup.'),
       '#default_value' => $this->options['timeline_fields']['headline'],
     ];
@@ -201,14 +248,14 @@ class TimelineJS extends StylePluginBase {
       '#options' => $view_fields_labels,
       '#title' => $this->t('Start date'),
       '#required' => TRUE,
-      '#description' => $this->t('The selected field should contain a string representing a date conforming to a <a href="@php-manual">PHP supported date and time format</a>.', ['@php-manual' => 'http://php.net/manual/en/datetime.formats.php']),
+      '#description' => $this->t('The selected field should contain a string representing a date conforming to a <a href="@php-manual">PHP supported date and time format</a>.  Start dates are required by event slides and eras.  If this mapping is not configured or if the field does not output dates in a valid format, then the slides or eras will not be added to the timeline.', ['@php-manual' => 'http://php.net/manual/en/datetime.formats.php']),
       '#default_value' => $this->options['timeline_fields']['start_date'],
     ];
     $form['timeline_fields']['end_date'] = [
       '#type' => 'select',
       '#options' => $view_fields_labels,
       '#title' => $this->t('End date'),
-      '#description' => $this->t('The selected field should contain a string representing a date conforming to a <a href="@php-manual">PHP supported date and time format</a>.', ['@php-manual' => 'http://php.net/manual/en/datetime.formats.php']),
+      '#description' => $this->t('The selected field should contain a string representing a date conforming to a <a href="@php-manual">PHP supported date and time format</a>.  End dates are required by eras.  If this mapping is not configured or if the field does not output dates in a valid format, then the eras will not be added to the timeline.', ['@php-manual' => 'http://php.net/manual/en/datetime.formats.php']),
       '#default_value' => $this->options['timeline_fields']['end_date'],
     ];
     $form['timeline_fields']['display_date'] = [
@@ -224,6 +271,13 @@ class TimelineJS extends StylePluginBase {
       '#title' => $this->t('Background image'),
       '#description' => $this->t('The selected field should contain a raw URL to an image.  Special handling is included for Image fields because they have no raw URL formatter.'),
       '#default_value' => $this->options['timeline_fields']['background'],
+    ];
+    $form['timeline_fields']['background_color'] = [
+      '#type' => 'select',
+      '#options' => $view_fields_labels,
+      '#title' => $this->t('Background color'),
+      '#description' => $this->t('The selected field should contain a string representing a CSS color, in hexadecimal (e.g. #0f9bd1) or a valid <a href="@color-keywords">CSS color keyword</a>.', ['@color-keywords' => 'https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#Color_keywords']),
+      '#default_value' => $this->options['timeline_fields']['background_color'],
     ];
     $form['timeline_fields']['media'] = [
       '#type' => 'select',
@@ -245,6 +299,13 @@ class TimelineJS extends StylePluginBase {
       '#description' => $this->t('The selected field may contain any text, including HTML markup.'),
       '#options' => $view_fields_labels,
       '#default_value' => $this->options['timeline_fields']['caption'],
+    ];
+    $form['timeline_fields']['thumbnail'] = [
+      '#type' => 'select',
+      '#options' => $view_fields_labels,
+      '#title' => $this->t('Media thumbnail'),
+      '#description' => $this->t('The selected field should contain a raw URL for an image to use in the timenav marker for this event. If omitted, TimelineJS will use an icon based on the type of media.  Special handling is included for Image fields because they have no raw URL formatter.'),
+      '#default_value' => $this->options['timeline_fields']['thumbnail'],
     ];
     $form['timeline_fields']['group'] = [
       '#type' => 'select',
@@ -272,23 +333,12 @@ class TimelineJS extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  function validate() {
-    $errors = parent::validate();
-
-    // Validate that fields have been assigned to the required options.
-    foreach (['start_date', 'headline'] as $required_option) {
-      if (empty($this->options['timeline_fields'][$required_option])) {
-        $errors[] = $this->t('The TimelineJS plugin requires specifying which views fields to use for the event slides.');
-        break;
-      }
-    }
-    return $errors;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   function render() {
+    // Return if the start date field mapping is not configured.
+    if (empty($this->options['timeline_fields']['start_date'])) {
+      drupal_set_message(t('The Start date field mapping must be configured in the TimelineJS format settings before any slides or eras can be rendered.'), 'warning');
+      return;
+    }
     $timeline = new Timeline();
 
     // Render the fields.  If it isn't done now then the row_index will be unset
@@ -530,7 +580,13 @@ class TimelineJS extends StylePluginBase {
         $url = $this->extractUrl($url);
       }
     }
-    return new Background($url);
+
+    $color = '';
+    if ($this->options['timeline_fields']['background_color']) {
+      $color_markup = $this->getField($this->view->row_index, $this->options['timeline_fields']['background_color']);
+      $color = $color_markup ? $color_markup->__toString() : '';
+    }
+    return new Background($url, $color);
   }
 
   /**
@@ -558,7 +614,18 @@ class TimelineJS extends StylePluginBase {
     }
 
     $media = new Media($url);
-    $media->setThumbnail($url);
+    if ($this->options['timeline_fields']['thumbnail']) {
+      $thumbnail_markup = $this->getField($this->view->row_index, $this->options['timeline_fields']['thumbnail']);
+      $thumbnail = $thumbnail_markup ? $thumbnail_markup->__toString() : '';
+
+      // Special handling because core Image fields have no raw URL formatter.
+      // Check to see if we don't have a raw URL.
+      if (!filter_var($thumbnail, FILTER_VALIDATE_URL)) {
+        // Attempt to extract a URL from an img or anchor tag in the string.
+        $thumbnail = $this->extractUrl($thumbnail);
+      }
+      $media->setThumbnail($thumbnail);
+    }
     if ($this->options['timeline_fields']['caption']) {
       $caption_markup = $this->getField($this->view->row_index, $this->options['timeline_fields']['caption']);
       $caption = $caption_markup ? $caption_markup->__toString() : '';

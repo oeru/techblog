@@ -1,0 +1,56 @@
+/**
+ * Custom CSS
+ * Use this file to override styles if you feel uncomfortable editing
+ * component stylesheets.
+ ============================================================================ */
+
+.block-search__content { float: right; }
+#block-oerf-branding { float: left; }
+#block-oerf-main-menu { float: left; }
+.block-menu__content { float: right; }
+#block-creativecommonsnotice-3 { float: left; }
+#block-creativecommonsnotice-3 p { font-size: 70%; }
+#block-oerf-footer { float: right; }
+
+#block-creativecommonsnotice {
+    float: left;
+}
+
+#block-oeru-technology-footer {
+    float: right;
+}
+
+#block-oeru-technology-account-menu .menu .menu__item {
+    float: left;
+    margin-left: 18px;
+}
+#block-oeru-technology-account-menu .menu .menu__item:first-child {
+    margin-left: 0px;
+}
+
+.node__submitted span {
+    display: block;
+    float: left;
+    font-size: 90%;
+    color: #888;
+    margin-bottom: 0;
+}	
+
+.node__submitted span.node__author {
+    margin-right: 1em;
+}
+
+.node__container .node__meta a:first-child {
+    display: none;
+}
+
+.node__container .node__meta .node__author a {
+    display: inline;
+}
+
+.node__content .field-node--field-blog-tags {
+    float: right;
+    font-size: 90%;
+}
+
+

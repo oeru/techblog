@@ -1,0 +1,16 @@
+<?php
+$databases['default']['default'] = array (
+  'database' => 'oerf_d8',
+  'username' => 'oerf',
+  'password' => 'w3ReqCLOs5WGfD',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['hash_salt'] = 'QaDqaWTcyX9t4aXLWI4wsh8BUDsuX4R8vz4g7G0DcCTmdkXdA2Gw_-m1ycicPcUaKh4vuWEwSQ';
+$settings['install_profile'] = 'standard';
+$config_directories['sync'] = 'sites/default/files/config_JyhqSMOAPahk9EtDrgdyEdb5ElFwcEYQMQIM9QqpEamCydSI7ZkxVBL_TehPoM_5TEw4isTQ1A/sync';
+$settings['trusted_host_patterns'] = array( '^dev\.oerfoundation\.org$', );
+
