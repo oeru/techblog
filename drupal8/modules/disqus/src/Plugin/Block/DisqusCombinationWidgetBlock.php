@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\disqus\Plugin\Block\DisqusCombinationWidgetBlock.
- */
-
 namespace Drupal\disqus\Plugin\Block;
 
 use Drupal\Core\Form\FormStateInterface;
 
 /**
+ * Plugin implementation of the 'disqus_combination_widget'.
  *
  * @Block(
  *   id = "disqus_combination_widget",
@@ -37,7 +33,7 @@ class DisqusCombinationWidgetBlock extends DisqusBaseBlock {
   protected function buildQuery() {
     return parent::buildQuery() + [
       'color' => $this->configuration['color_theme'],
-      'default_tab' => $this->configuration['default_tab'],
+      'default_tab' => $this->configuration['default_tab_view'],
       'excerpt_length' => $this->configuration['excerpt_length'],
       'hide_mods' => (int) $this->configuration['hide_mods'],
     ];
