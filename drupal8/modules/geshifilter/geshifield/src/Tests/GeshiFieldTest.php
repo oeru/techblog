@@ -1,10 +1,5 @@
 <?php
-/**
- * @file
- * Definition of Drupal\geshifield\Tests\GeshiFieldTest.
- */
 
-// Namespace of tests.
 namespace Drupal\geshifield\Tests;
 
 use \Drupal\geshifilter\GeshiFilter;
@@ -24,6 +19,8 @@ class GeshiFieldTest extends WebTestBase {
 
   /**
    * A global filter adminstrator.
+   *
+   * @var object
    */
   protected $adminUser;
 
@@ -39,7 +36,13 @@ class GeshiFieldTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('node', 'libraries', 'geshifilter', 'filter', 'geshifield', 'field_ui');
+  public static $modules = array(
+    'node',
+    'geshifilter',
+    'filter',
+    'geshifield',
+    'field_ui',
+  );
 
   /**
    * Code run before each and every test method.
@@ -103,14 +106,27 @@ class GeshiFieldTest extends WebTestBase {
     $this->drupalGet('admin/config/content/formats');
   }
 
+  /**
+   * Test if we can add the field and a node on it.
+   */
   public function testAddField() {
-
     $this->addField('geshifield', 'geshi', 'GeshiFilter Field');
-    $this->createNode('title','body','<?php echo("hi"); ?>', 'php');
-
+    $this->addNode('title', 'body', '<?php echo("hi"); ?>', 'php');
   }
 
-  private function createNode($title, $body, $sourcecode, $language) {
+  /**
+   * Add a new node.
+   *
+   * @param string $title
+   *   Title of node.
+   * @param string $body
+   *   Body content of node.
+   * @param string $sourcecode
+   *   The content of geshifield in node.
+   * @param string $language
+   *   The language used in geshifield.
+   */
+  protected function addNode($title, $body, $sourcecode, $language) {
     // Create a node.
     $node = array(
       'title[0][value]' => $title,
@@ -122,6 +138,20 @@ class GeshiFieldTest extends WebTestBase {
     $this->drupalGet('node/1');
   }
 
+  /**
+   * Add a field.
+   *
+   * @param string $type
+   *   The type of field.
+   * @param string $name
+   *   The name of the field.
+   * @param string $label
+   *   The label of the field.
+   * @param array $values
+   *   Possible values of the field.
+   * @param array $instance
+   *   Instance of the field.
+   */
   private function addField($type, $name, $label, $values = array(), $instance = array()) {
     // Choose field type and name.
     $edit = array();
@@ -136,4 +166,5 @@ class GeshiFieldTest extends WebTestBase {
     // Settings for this instance of field, keep the default.
     $this->drupalPostForm(NULL, $instance, 'Save settings');
   }
+
 }

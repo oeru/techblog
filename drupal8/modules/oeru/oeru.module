@@ -1,0 +1,37 @@
+<?php
+
+use \Drupal\Core\Session;
+
+/**
+ * Implements hook_user_format_name_alter().
+ */
+function oeru_user_format_name_alter(&$name, $account) {
+  // Display the user's uid instead of name.
+  //var_dump($account);
+  if ($account->id()) {
+    //$name = t('@name', array('@name' => $account->full_name()));
+    $name = t('@name', array('@name' => 'Dave Lane'));
+  }
+}
+
+/**
+ * Implements hook_node_links_alter().
+ */
+function oeru_node_links_alter(array &$node_links, NodeInterface $entity, array &$context) {
+  if ($entity->getEntityTypeId() == 'node' && $entity->bundle() == 'blog_post' && $context['view_mode'] != 'rss') {
+
+    $links['blog_usernames_blog'] = array(
+      'title' => t("username's Blog", array('username' => $entity->getOwner()->getDisplayName())),
+      'url' => Url::fromRoute('view.blog.blog_user_all', [
+        'arg_0' => $entity->getOwnerId(),
+      ]),
+      'attributes' => array('title' => t("Read %username's latest blog entries.", array('%username' => $entity->getOwner()->getDisplayName()))),
+    );
+    $node_links['usernames_blog'] = array(
+      '#theme' => 'links__node__blog',
+      '#links' => $links,
+      '#attributes' => array('class' => array('links', 'inline')),
+    );
+  }
+}
+

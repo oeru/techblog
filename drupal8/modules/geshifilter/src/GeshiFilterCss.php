@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\geshifilter\GeshiFilterCss.
- */
 
 namespace Drupal\geshifilter;
 
@@ -18,10 +14,11 @@ use Drupal\Core\Url;
  * All function in this are static, they help with the css generation.
  */
 class GeshiFilterCss {
+
   /**
    * Create the page that show the css in use.
    *
-   * @return \Symfony\Component\HttpFoundation\Response Response
+   * @return \Symfony\Component\HttpFoundation\Response
    *   Return the css to show.
    */
   public static function generateCss() {
@@ -60,7 +57,6 @@ class GeshiFilterCss {
     return $directory;
   }
 
-
   /**
    * Helper function for generating the CSS rules.
    *
@@ -69,7 +65,7 @@ class GeshiFilterCss {
    */
   public static function generateLanguagesCssRules() {
     $output = '';
-    $geshi_library = libraries_load('geshi');
+    $geshi_library = GeshiFilter::loadGeshi();
     if ($geshi_library['loaded']) {
       $languages = GeshiFilter::getAvailableLanguages();
       foreach ($languages as $langcode => $language_full_name) {

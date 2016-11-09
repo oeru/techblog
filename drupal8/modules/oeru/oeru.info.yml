@@ -1,0 +1,9 @@
+type: module
+name: OERu Tweaks 
+description: Provides a bunch of tweaks to Drupal 8.2.x for the purposes of OERu's Tech Blog att https://tech.oeru.org
+# core: 8.x
+package: OERu
+version: '8.x-1.0-alpha1'
+core: '8.x'
+project: 'OERu Tech Blog'
+datestamp: 1478061888

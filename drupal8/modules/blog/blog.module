@@ -62,7 +62,7 @@ function blog_node_links_alter(array &$node_links, NodeInterface $entity, array 
       'url' => Url::fromRoute('view.blog.blog_user_all', [
         'arg_0' => $entity->getOwnerId(),
       ]),
-      'attributes' => array('title' => t("Read username's latest blog entries.", array('username' => $entity->getOwner()->getDisplayName()))),
+      'attributes' => array('title' => t("Read @username's latest blog entries.", array('@username' => $entity->getOwner()->getDisplayName()))),
     );
     $node_links['usernames_blog'] = array(
       '#theme' => 'links__node__blog',

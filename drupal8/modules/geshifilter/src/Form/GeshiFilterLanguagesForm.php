@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geshifilter\Form\GeshiFilterLanguagesForm.
- */
-
 namespace Drupal\geshifilter\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -17,7 +12,6 @@ use Drupal\Core\Cache\Cache;
 
 use \Drupal\geshifilter\GeshiFilter;
 
-
 /**
  * Form used to set enable/disabled for languages.
  */
@@ -25,6 +19,8 @@ class GeshiFilterLanguagesForm extends ConfigFormBase {
 
   /**
    * List of modules to enable.
+   *
+   * @var array
    */
   public static $modules = array('libraries', 'geshifilter');
 
@@ -57,7 +53,7 @@ class GeshiFilterLanguagesForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state, $view = NULL) {
     $config = $this->config('geshifilter.settings');
     // Check if GeSHi library is available.
-    $geshi_library = libraries_load('geshi');
+    $geshi_library = GeshiFilter::loadGeshi();
     if (!$geshi_library['loaded']) {
       drupal_set_message($geshi_library['error message'], 'error');
       return array();

@@ -4,6 +4,10 @@
  * component stylesheets.
  ============================================================================ */
 
+.node_content h2 { font-size: 1rem; }
+code, blockcode { background-color:  #efefef; font-family: "DejaVu Sans Mono"; overflow: auto; }
+blockcode { display: block; }
+
 .block-search__content { float: right; }
 #block-oerf-branding { float: left; }
 #block-oerf-main-menu { float: left; }

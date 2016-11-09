@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Definition of Drupal\geshifilter\GeshiFilterProcess.
- */
 
 namespace Drupal\geshifilter;
 
@@ -13,6 +9,7 @@ use Drupal\Component\Utility\SafeMarkup;
  * Helpers functions related to processing the source code with geshi.
  */
 class GeshiFilterProcess {
+
   /**
    * Geshifilter wrapper for highlight_string() processing of PHP.
    *
@@ -65,7 +62,7 @@ class GeshiFilterProcess {
   public static function geshiProcess($source_code, $lang, $line_numbering = 0, $linenumbers_start = 1, $inline_mode = FALSE, $title = NULL) {
     $config = \Drupal::config('geshifilter.settings');
     // Load GeSHi library (if not already).
-    $geshi_library = libraries_load('geshi');
+    $geshi_library = GeshiFilter::loadGeshi();
     if (!$geshi_library['loaded']) {
       drupal_set_message($geshi_library['error message'], 'error');
       return $source_code;
@@ -157,8 +154,12 @@ class GeshiFilterProcess {
    * @return string
    *   The sourcecode after process by Geshi.
    */
-  public static function processSourceCode($source_code, $lang, $line_numbering = 0,
-                                          $linenumbers_start = 1, $inline_mode = FALSE, $title = NULL) {
+  public static function processSourceCode($source_code,
+  $lang,
+  $line_numbering = 0,
+                                          $linenumbers_start = 1,
+  $inline_mode = FALSE,
+  $title = NULL) {
     $config = \Drupal::config('geshifilter.settings');
     // Process.
     if ($lang == 'php' && $config->get('use_highlight_string_for_php', FALSE)) {
