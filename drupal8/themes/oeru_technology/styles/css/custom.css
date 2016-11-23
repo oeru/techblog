@@ -32,16 +32,49 @@ blockcode { display: block; }
     margin-left: 0px;
 }
 
+.node__content .field-node--field-blog-tags {
+    margin: 0px 0px 6px 6px;
+}
+
+.node__container .node__header--has-meta {
+    position: relative;
+}
+
+.node__container header {
+    display: block; 
+    padding-bottom: 10px;
+}
+
+.node__container header h1 {
+    display: inline; 
+}
+
+/*.node__meta .node__submitted { */
+.node__meta {
+    display: inline;
+    float: right;
+    border-radius: 5px;
+    line-height: 1em;
+    margin: 2px 0px 6px 6px;
+    padding: 6px;
+    background-color: #eee;
+    /* border: dotted 1px #ddd;*/
+}	
+
 .node__submitted span {
     display: block;
-    float: left;
+    /*float: left;*/
     font-size: 90%;
-    color: #888;
-    margin-bottom: 0;
+    color: #666;
 }	
 
 .node__submitted span.node__author {
     margin-right: 1em;
+    display: none;
+}
+
+.node__submitted .node__pubdate .field {
+    margin-bottom: 0;
 }
 
 .node__container .node__meta a:first-child {
@@ -50,6 +83,10 @@ blockcode { display: block; }
 
 .node__container .node__meta .node__author a {
     display: inline;
+}
+
+.node__content {
+    clear: both;
 }
 
 .node__content .field-node--field-blog-tags {

@@ -1,17 +1,22 @@
 <?php
 
+use \Drupal\Core\Url;
 use \Drupal\Core\Session;
+use \Drupal\node\NodeInterface;
+
 
 /**
  * Implements hook_user_format_name_alter().
  */
 function oeru_user_format_name_alter(&$name, $account) {
   // Display the user's uid instead of name.
-  //var_dump($account);
-  if ($account->id()) {
+  //print_r($account);
+  /*if ($account->id()) {
     //$name = t('@name', array('@name' => $account->full_name()));
-    $name = t('@name', array('@name' => 'Dave Lane'));
-  }
+    $name = t('@name', array('@name' => 'David Lane'));
+  }*/
+
+  //$name = "test";
 }
 
 /**
@@ -20,12 +25,18 @@ function oeru_user_format_name_alter(&$name, $account) {
 function oeru_node_links_alter(array &$node_links, NodeInterface $entity, array &$context) {
   if ($entity->getEntityTypeId() == 'node' && $entity->bundle() == 'blog_post' && $context['view_mode'] != 'rss') {
 
+    if ($entity->getOwner()->get('field_fullname')) {
+      $fullname = $entity->getOwner()->get('field_fullname')->value;
+    }
+    else {
+      $fullname = $entity->getOwner()->getDisplayName();	
+    }
     $links['blog_usernames_blog'] = array(
-      'title' => t("username's Blog", array('username' => $entity->getOwner()->getDisplayName())),
+      'title' => t("@username's Blog", array('@username' => $fullname)),
       'url' => Url::fromRoute('view.blog.blog_user_all', [
         'arg_0' => $entity->getOwnerId(),
       ]),
-      'attributes' => array('title' => t("Read %username's latest blog entries.", array('%username' => $entity->getOwner()->getDisplayName()))),
+      'attributes' => array('title' => t("Read %username's latest blog entries.", array('%username' => $fullname))),
     );
     $node_links['usernames_blog'] = array(
       '#theme' => 'links__node__blog',

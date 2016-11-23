@@ -49,7 +49,7 @@ class BlogLister implements BlogListerInterface {
    *   Title string
    */
   public function userBlogTitle(UserInterface $user) {
-    return Xss::filter($user->getUsername()) . "'s blog";
+    return Xss::filter($user->getDisplayName()) . "'s blog";
   }
 
 }
