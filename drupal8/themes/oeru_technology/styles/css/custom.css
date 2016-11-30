@@ -32,8 +32,8 @@ blockcode { display: block; }
     margin-left: 0px;
 }
 
-.node__content .field-node--field-blog-tags {
-    margin: 0px 0px 6px 6px;
+.node__content .field {
+    margin: 0px 0px 18px 18px;
 }
 
 .node__container .node__header--has-meta {
@@ -94,4 +94,6 @@ blockcode { display: block; }
     font-size: 90%;
 }
 
-
+.block .block__content .views-row {
+    margin-bottom: 0.3em;
+}
