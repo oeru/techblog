@@ -161,7 +161,7 @@ class GenerateForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => t('UI Kit'),
       '#default_value' => 0,
-      '#description' => t('Include the User Interfact Kit - a SASS/Compass UI Kit for Adativetheme and Drupal.'),
+      '#description' => t('Include the User Interface Kit - a SASS/Compass UI Kit for Adaptivetheme and Drupal.'),
       '#states' => array(
         'visible' => array(
           'select[name="generate[generate_type]"]' => array(
@@ -199,6 +199,21 @@ class GenerateForm extends FormBase {
         'visible' => array(
           'select[name="generate[generate_type]"]' => array(
             array('value' => 'standard'),
+          ),
+        ),
+      ),
+    );
+
+    // Block config
+    $form['generate']['options']['generate_block_config'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Block Config'),
+      '#default_value' => 1,
+      '#description' => t('Include configuration for blocks. Un-check this setting if you want your theme to inherit the default themes block configuration.'),
+      '#states' => array(
+        'visible' => array(
+          'select[name="generate[generate_type]"]' => array(
+            ['value' => 'standard'],
           ),
         ),
       ),
@@ -299,10 +314,11 @@ class GenerateForm extends FormBase {
       $subtheme_type       = $values['generate']['generate_type'];
       $clone_source        = $values['generate']['generate_clone_source'] ?: '';
       $templates           = $values['generate']['options']['generate_templates'];
+      $block_config        = $values['generate']['options']['generate_block_config'];
       $uikit               = $values['generate']['options']['generate_uikit'];
       $color               = $values['generate']['options']['generate_color'];
       $theme_settings_file = $values['generate']['options']['generate_themesettingsfile'];
-      $description         = preg_replace('/[^A-Za-z0-9. ]/', '', Html::escape($values['generate']['options']['generate_description']));
+      $description         = preg_replace('/[^\p{Latin}\d\s\p{P}]/u', '', Html::escape($values['generate']['options']['generate_description']));
       $version             = Html::escape($values['generate']['options']['generate_version']);
 
       // Initialize variables.
@@ -461,6 +477,13 @@ class GenerateForm extends FormBase {
             $fileOperations->fileRename("$target/config/$config_path/$config_file", "$target/config/$config_path/$new_config_file");
             $fileOperations->fileStrReplace("$target/config/$config_path/$new_config_file", 'TARGET', $target);
             $fileOperations->fileStrReplace("$target/config/$config_path/$new_config_file", $source_theme, $machine_name);
+          }
+        }
+      }
+      if ($subtheme_type === 'standard') {
+        if ($block_config === 0) {
+          if (is_dir("$target/config/optional")) {
+            $directoryOperations->directoryRemove("$target/config/optional");
           }
         }
       }

@@ -188,6 +188,19 @@ samp {
 
 // Leaderboard
 .pr-leaderboard {    // Outer wrapper.
+  color: $page-leaderboard-color;
+
+  .menu a {
+    color: inherit;
+
+    &.active,
+    &:hover,
+    &:focus {
+      color: inherit;
+    }
+  }
+
+
   &__rw {}           // Regions wrapper (container that takes max-width from your layout settings).
   &__leaderboard {}  // Region.
 }
@@ -211,6 +224,12 @@ samp {
 
   .menu a {
     color: inherit;
+
+    &.active,
+    &:hover,
+    &:focus {
+      color: inherit;
+    }
   }
 
   &__rw {}

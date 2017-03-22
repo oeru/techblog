@@ -17,7 +17,15 @@
   position: relative;
 }
 .ms-accordion .rm-accordion-trigger {
-  display: block;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: absolute;
   left: 0;
   top: 0;
@@ -25,8 +33,8 @@
   border: 0;
   margin: 0;
   height: 100%;
-  max-width: 36px;
-  max-width: 2.25rem;
+  width: 36px;
+  width: 2.25rem;
 }
 .ms-accordion .rm-accordion-trigger:hover, .ms-accordion .rm-accordion-trigger:focus {
   outline: 0;
@@ -40,13 +48,10 @@
 .ms-accordion .rm-accordion-trigger__icon {
   border-radius: 0;
   border: 0;
-  box-sizing: content-box;
+  padding: 0;
+  margin: auto;
   width: 16px;
   width: 1rem;
-  padding: 10px;
-  padding: 0.625rem;
-  margin: 0;
-  vertical-align: middle;
 }
 .ms-accordion .is-child {
   padding: 0;
@@ -55,4 +60,5 @@
   margin-left: 40px;
   margin-left: 2.5rem;
 }
+
 /*# sourceMappingURL=maps/responsive-menus--accordion.css.map */

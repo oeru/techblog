@@ -5,15 +5,14 @@
   "use strict";
 
   Drupal.behaviors.atFFOI = {
-    attach: function (context) {
+    attach: function () {
 
       $('html').addClass('fa-loading');
 
-      var fontawesome = new FontFaceObserver('FontAwesome', {});
+      var fontObserver = new FontFaceObserver('FontAwesome');
 
-      // Because we are checking an icon font we need a unicode code point to check,
-      // SEE https://github.com/bramstein/fontfaceobserver/issues/34
-      fontawesome.check('\uf22d').then(function () {
+      // Because we are loading an icon font we need a unicode code point.
+      fontObserver.load('\uf287\uf142\uf0fc').then(function () {
         $('html').removeClass('fa-loading').addClass('fa-loaded');
       }, function() {
         $('html').removeClass('fa-loading').addClass('fa-unavailable');

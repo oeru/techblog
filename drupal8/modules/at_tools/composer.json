@@ -17,9 +17,6 @@
             "role": "Maintainer"
         }
     ],
-    "require": {
-        "drupal/adaptivetheme": "8.*",
-    },
     "repositories": {
         "drupal": {
             "type": "composer",

@@ -145,6 +145,16 @@ samp {
   background-color: #f7f7f7;
 }
 
+.pr-leaderboard {
+  color: #5c5c5c;
+}
+.pr-leaderboard .menu a {
+  color: inherit;
+}
+.pr-leaderboard .menu a.active, .pr-leaderboard .menu a:hover, .pr-leaderboard .menu a:focus {
+  color: inherit;
+}
+
 .pr-header {
   color: #363636;
   background-color: #ffffff;
@@ -161,6 +171,9 @@ samp {
   background: inherit;
 }
 .pr-navbar .menu a {
+  color: inherit;
+}
+.pr-navbar .menu a.active, .pr-navbar .menu a:hover, .pr-navbar .menu a:focus {
   color: inherit;
 }
 
@@ -1079,4 +1092,5 @@ input.cke_dialog_ui_input_password {
   color: #363636 !important;
   border-color: #eeeeee !important;
 }
+
 /*# sourceMappingURL=maps/color.css.map */

@@ -27,15 +27,17 @@
   }
 
   .rm-accordion-trigger {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     #{$flow-from}: 0;
-    top :0;
+    top: 0;
     border-radius: 0;
     border: 0;
     margin: 0;
     height: 100%;
-    @include output-rhythm(max-width, 36px);
+    @include output-rhythm(width, 36px);
 
     &:hover,
     &:focus {
@@ -53,11 +55,9 @@
   .rm-accordion-trigger__icon {
     border-radius: 0;
     border: 0;
-    box-sizing: content-box;
+    padding: 0;
+    margin: auto;
     @include output-rhythm(width, $medium);
-    @include output-rhythm(padding, 10px);
-    margin: 0;
-    vertical-align: middle;
   }
 
   .is-child {
@@ -68,4 +68,3 @@
     }
   }
 }
-
