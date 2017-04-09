@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ckeditor\Plugin\CKEditorPlugin\DrupalLink.
- */
-
 namespace Drupal\ckeditor_entity_link\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
@@ -41,8 +36,8 @@ class EntityLink extends CKEditorPluginBase {
    */
   public function getConfig(Editor $editor) {
     return array(
-      'EntityLink_dialogTitleAdd' => t('Add Entity Link'),
-      'EntityLink_dialogTitleEdit' => t('Edit Entity Link'),
+      'EntityLink_dialogTitleAdd' => t('Add Link'),
+      'EntityLink_dialogTitleEdit' => t('Edit Link'),
     );
   }
 

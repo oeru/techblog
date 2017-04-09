@@ -1,14 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ckeditor_entity_link\Form\CKEditorEntityLinkDialog.
- */
-
 namespace Drupal\ckeditor_entity_link\Form;
 
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\filter\Entity\FilterFormat;
@@ -20,13 +16,21 @@ use Drupal\Core\Ajax\CloseModalDialogCommand;
 /**
  * Provides a link dialog for text editors.
  */
-class CKEditorEntityLinkDialog extends FormBase {
+class CKEditorEntityLinkDialog extends FormBase implements BaseFormIdInterface {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
     return 'ckeditor_entity_link_dialog';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBaseFormId() {
+    // Use the EditorLinkDialog form id to ease alteration.
+    return 'editor_link_dialog';
   }
 
   /**
@@ -48,17 +52,17 @@ class CKEditorEntityLinkDialog extends FormBase {
     $form['#prefix'] = '<div id="ckeditor-entity-link-dialog-form">';
     $form['#suffix'] = '</div>';
 
-    $typeLabels = \Drupal::entityManager()->getEntityTypeLabels(TRUE);
+    $entity_types = \Drupal::entityTypeManager()->getDefinitions();
     $types = array();
     foreach ($config->get('entity_types') as $type => $selected) {
       if ($selected) {
-        $types[$type] = $typeLabels['Content'][$type];
+        $types[$type] = $entity_types[$type]->getLabel();
       }
     }
 
     $form['entity_type'] = array(
       '#type' => 'select',
-      '#title' => t('Entity type'),
+      '#title' => t('Link type'),
       '#options' => $types,
       '#default_value' => 'node',
       '#required' => TRUE,
@@ -80,7 +84,7 @@ class CKEditorEntityLinkDialog extends FormBase {
     $form['entity_id'] = array(
       '#type' => 'entity_autocomplete',
       '#target_type' => $entity_type,
-      '#title' => t('Entity'),
+      '#title' => t('Link'),
       '#required' => TRUE,
       '#prefix' => '<div id="entity-id-wrapper">',
       '#suffix' => '</div>',
@@ -89,13 +93,6 @@ class CKEditorEntityLinkDialog extends FormBase {
     if (!empty($bundles)) {
       $form['entity_id']['#selection_settings']['target_bundles'] = $bundles;
     }
-
-    $form['target'] = array(
-      '#title' => $this->t('Open in new window'),
-      '#type' => 'checkbox',
-      '#default_value' => !empty($input['target']),
-      '#return_value' => '_blank',
-    );
 
     $form['actions'] = array(
       '#type' => 'actions',
@@ -126,7 +123,7 @@ class CKEditorEntityLinkDialog extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new HtmlCommand('#editor-link-dialog-form', $form));
+      $response->addCommand(new HtmlCommand('#ckeditor-entity-link-dialog-form', $form));
     }
     else {
       $entity = \Drupal::entityManager()
@@ -136,8 +133,7 @@ class CKEditorEntityLinkDialog extends FormBase {
       $values = array(
         'attributes' => array(
           'href' => $this->getUrl($entity),
-          'target' => $form_state->getValue('target')
-        )
+        ) + $form_state->getValue('attributes', [])
       );
 
       $response->addCommand(new EditorDialogSave($values));
