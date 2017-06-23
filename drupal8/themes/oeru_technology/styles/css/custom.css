@@ -97,3 +97,8 @@ blockcode { display: block; }
 .block .block__content .views-row {
     margin-bottom: 0.3em;
 }
+
+.node__content .field-type-image__item {
+    box-shadow: 3px 3px 10px #aaa;
+}
+
