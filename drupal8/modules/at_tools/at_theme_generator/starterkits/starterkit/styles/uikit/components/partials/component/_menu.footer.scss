@@ -4,18 +4,17 @@
 
 // Region or row specific menu overrides
 .pr-footer__footer {
-  // Horizontal footer menu by default.
-  .block-menu {
-    margin: 0;
 
-    .menu a:after {
-      content: none;
-      display: none;
-    }
+  .block-menu {}
 
-    .menu-level-1 {
-      @include list-horizontal($flow-from, $margin: (t: $xxx-small, r: $medium, b: $xxx-small, l: 0), $list-item-selector: '.menu__item');
-    }
+  .menu-level-1 {
+    @include list-horizontal($flow-from, $margin: (t: $x-small, r: $medium, b: $x-small, l: 0), $list-item-selector: '.menu__item');
+  }
+
+  .menu .menu__link:after {
+    content: none;
+    display: none;
   }
 }
+
 

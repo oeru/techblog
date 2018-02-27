@@ -21,7 +21,7 @@
 .field-node--node-changed-date {}
 
 .field-node--node-link {
-  @include clearfix-micro;
+  @include cfm;
   clear: both;
 
   @media #{$wide} {

@@ -3,40 +3,51 @@
  * - useful classes to be used anywhere.
  ============================================================================ */
 
-// Center Vertically - requires a height on the parent container and position
-// relative.
-.is-vertical-center {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  filter: blur(0.1px); // hack to mitigate blurring in Chrome/Webkit.
+// FlexPosition styles. See at.flexPosition.js
+.is-flexposition-container {
+  display: flex;
+  flex-direction: $row-direction;
+  height: 100%;
+  width: 100%;
 }
+
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: $row-direction;
+  width: 100%;
+}
+
+
+.is-vertical-center {
+  align-items: center;
+}
+
 
 .is-vertical-top {
-  position: absolute;
-  top: 0;
-  bottom: auto;
+  align-items: flex-start;
 }
+
 
 .is-vertical-bottom {
-  position: absolute;
-  top: auto;
-  bottom: 0;
+  align-items: flex-end;
 }
+
 
 .is-horizontal-center {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  text-align: center;
-  display: table;
+  justify-content: center;
 }
+
 
 .is-horizontal-left {
-  left: 0;
-  right: auto;
+  justify-content: flex-start;
 }
 
+
 .is-horizontal-right {
-  left: auto;
-  right: 0;
+  justify-content: flex-end;
 }
+
+
+

@@ -8,7 +8,7 @@
 
 .ms-accordion {
 
-  a {
+  .menu__link {
     &:hover,
     &:focus {
       outline: 0;
@@ -16,7 +16,7 @@
   }
 
   .is-parent {
-    a {
+    .menu__link {
       @include output-rhythm(margin-#{$flow-from}, 40px);
     }
   }
@@ -68,3 +68,4 @@
     }
   }
 }
+

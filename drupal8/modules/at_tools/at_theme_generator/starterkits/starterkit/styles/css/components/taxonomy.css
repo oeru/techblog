@@ -2,22 +2,33 @@
  * Field Taxonomy Reference (Entity Reference as tags).
  ============================================================================ */
 .field-entity-reference-type-taxonomy-term .field__item {
-  margin: 0 11px 0 0;
-  margin: 0 0.6875rem 0 0;
-}
-[dir="rtl"] .field-entity-reference-type-taxonomy-term li {
-  margin: 0 0 0 11px;
-  margin: 0 0 0 0.6875rem;
-}
-.field-entity-reference-type-taxonomy-term .field__items {
-  padding: 0;
-}
-.field-entity-reference-type-taxonomy-term .field__item {
-  margin: 0;
-  padding: 0;
-}
-.field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-entity-id.field-label-inline .field__item, .field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-entity-id.field-label-hidden .field__item, .field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-entity-id.field-label-visually_hidden .field__item, .field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-label.field-label-inline .field__item, .field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-label.field-label-hidden .field__item, .field-entity-reference-type-taxonomy-term.field-formatter-entity-reference-label.field-label-visually_hidden .field__item {
+  margin: 0 0.375rem 0;
   display: inline-block;
 }
 
-/*# sourceMappingURL=maps/taxonomy.css.map */
+.field-entity-reference-type-taxonomy-term.field-label-above .field__item:first-child {
+  margin-left: 0;
+}
+
+[dir="rtl"] .field-entity-reference-type-taxonomy-term li {
+  margin: 0 0 0 0.75rem;
+}
+
+.field-entity-reference-type-taxonomy-term .field__item-wrapper:after {
+  content: ",";
+  display: inline-block;
+}
+
+.field-entity-reference-type-taxonomy-term .field__item:last-child .field__item-wrapper:after {
+  content: "";
+  display: none;
+}
+
+.field-entity-reference-type-taxonomy-term .field__items {
+  padding: 0;
+}
+
+.field-entity-reference-type-taxonomy-term .field__item {
+  padding: 0;
+}
+/*# sourceMappingURL=taxonomy.css.map */

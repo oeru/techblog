@@ -43,17 +43,21 @@
 
 // Override core filter.admin style since we don't really want to unset the
 // entire stylesheet, just replace the help icon with font-awesome.
-.filter-help a:after {
-  position: static;
-  top: auto;
-  right: auto;
+.filter-help a {
   display: block;
-  width: auto;
-  height: auto;
-  margin: 0;
 
-  [dir="rtl"] & {
-    left: auto;
+  &:after {
+    position: static;
+    top: auto;
+    right: auto;
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+
+    [dir="rtl"] & {
+      left: auto;
+    }
   }
 }
 

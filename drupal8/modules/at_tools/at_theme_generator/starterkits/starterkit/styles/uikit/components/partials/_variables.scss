@@ -16,20 +16,27 @@
 // Compass Vertical Rhythm is used in conjunction with Modular Scale.
 // https://github.com/chriseppstein/compass
 // https://github.com/modularscale/modularscale-sass
-// MS provides the scale, while Vertical Rhythm sets adjusted font sizes and
-// line heights.
+// MS provides the scale, while Vertical Rhythm sets font sizes and baseline
+// line height.
 
-$base-font-size             : 16px;
-$base-line-height           : 6px; // adjust-leading-to(4) on body = 24px or 1.5rem
-$round-to-nearest-half-line : true;
-$rem-with-px-fallback       : true;
-$rhythm-unit                : 'rem';
+$base-font-size              : 16px;
+$base-line-height            : 24px;
+
+$min-line-padding            : 2px;
+$min-line-margin             : 2px;
+
+$rhythm-unit                 : 'rem';
+$rem-with-px-fallback        : false;
+$round-to-nearest-half-line  : true;
+
+$default-rhythm-border-width : 1px;
+$default-rhythm-border-style : solid;
 
 
 // Modular Scale
 // -----------------------------------------------------------------------------
-$ms-base  : $base-font-size ($base-font-size * 1.130);
-$ms-ratio : $phi;
+$ms-base  : $base-font-size ($base-font-size * 2);
+$ms-ratio : $golden;
 
 
 // Modular Scale size variables
@@ -38,7 +45,7 @@ $ms-ratio : $phi;
 // functions to convert to rem where required, or simply use the variable if you
 // want a pixel value.
 //
-// For example we use the compass mixin: adjust-font-size-to() which returns
+// For example we use the compass mixin: output-rhythm(font-size, ) which returns
 // both the font-size and line-height in rem with a px fallback for browsers
 // that do not support rem units.
 //
@@ -46,23 +53,22 @@ $ms-ratio : $phi;
 // the line-height, e.g.:
 //
 // .selector {@include font-size($medium);} will return:
-// .selector {font-size: 16px; font-size: 1rem;}
+// .selector {font-size: 1rem;}
 //
-// Throughout the UIKit you will see other Compass mixins used to return px and
-// rem units, such as consistently using output-rhythm() to achieve full browser
-// support.
+// Create half notes by dividing a note, for example to split padding top and
+// bottom, i.e. @include output-rhythm(padding, ($small / 2) 0);
 
-$xxxx-large : ms(5);
-$xxx-large  : ms(4);
-$xx-large   : ms(3);
-$x-large    : ms(2);
-$large      : ms(1);
-$medium     : ms(0);
-$small      : ms(-1);
-$x-small    : ms(-2);
-$xx-small   : ms(-3);
-$xxx-small  : ms(-4);
-$xxxx-small : ms(-5);
+$xxxx-large    : ms(5);
+$xxx-large     : ms(4);
+$xx-large      : ms(3);
+$x-large       : ms(2);
+$large         : ms(1);
+$medium        : ms(0);
+$small         : ms(-1);
+$x-small       : ms(-2);
+$xx-small      : ms(-3);
+$xxx-small     : ms(-4);
+$xxxx-small    : ms(-5);
 
 
 // Font Weights
@@ -97,7 +103,14 @@ $font-monospace   : $monospace;
 //
 // =============================================================================
 
-// Lighten and Darken
+// Global padding
+// Matches the global padding set in the layout (e.g. flex-builder). We use this
+// to ensure things like gutters are teh same everywhere, or use it recalculate
+// gutters, e.g. if we want to double it.
+$global-padding: 0.625em;
+
+
+// Lighten and Darken (avoid if using color module)
 // -----------------------------------------------------------------------------
 $lighten      : 3%;
 $lighten-more : 5%;
@@ -109,13 +122,12 @@ $darken-most  : 10%;
 
 // Global Transition
 // -----------------------------------------------------------------------------
-$global-transition: all, 225ms, ease-in-out;
+$global-transition        : all, 225ms, ease-in-out;
 
 
 // Color module
 // -----------------------------------------------------------------------------
 $base-color               : #000000;
-$thistest : 1;
 
 
 // Text colors
@@ -140,8 +152,8 @@ $link-visited-hover-color : $link-color;
 
 // Borders
 // -----------------------------------------------------------------------------
-$border-width             : 1px;
-$border-style             : solid;
+$border-width             : $default-rhythm-border-width;
+$border-style             : $default-rhythm-border-style;
 $border-color             : #cccccc;
 $border-color-light       : #eeeeee;
 $border-radius            : 2px;
@@ -199,62 +211,68 @@ $even-color : $text-background-color-normal;
 // Page, Regions, Blocks and element specific styles.
 // -----------------------------------------------------------------------------
 
-// body element.
-$body-background-color    : #333333;
+// body background color.
+$body-background-color             : #333333;
 
-// .page, an inner-body full width page background.
-$page-background-color    : #f7f7f7;
+// .page background color.
+$page-background-color             : #f7f7f7;
 
-// Wrapper around regions, the max-width is set on this wrapper.
-$regions-background-color : $page-background-color;
+// Row background colors.
+$row-background-color-very-lite    : #fafafa;
+$row-background-color-lite         : $page-background-color;
+$row-background-color-medium-lite  : #ebebeb;
+$row-background-color-medium       : #d3d3d3;
+$row-background-color-medium-dark  : #999999;
+$row-background-color-dark         : #757575;
+$row-background-color-very-dark    : #666666;
 
-
-// Page Row colors - for the site-builder layout plugin.
-// -----------------------------------------------------------------------------
+// Regions wrapper background color.
+$regions-background-color          : $row-background-color-lite;
 
 // Full width background toggle.
 $page-row-fullwidth : true;
 $regions-padding    : $medium;
 
 // Leaderboard.
-$page-leaderboard-color                : $text-color-medium;
-$page-leaderboard-background-color     : $regions-background-color;
+$page-leaderboard-color                : $text-color;
+$page-leaderboard-background-color     : $row-background-color-lite;
 
 // Header.
 $page-header-color                     : $text-color;
-$page-header-background-color          : #ffffff;
+$page-header-background-color          : $row-background-color-very-lite;
 
 // Navbar.
 $page-navbar-color                     : #ffffff;
-$page-navbar-background-color          : #666666;
+$page-navbar-background-color          : $row-background-color-very-dark;
+$page-navbar-hover-background-color    : $row-background-color-dark;
 
 // Highlighted.
 $page-highlighted-color                : $text-color;
-$page-highlighted-background-color     : $regions-background-color;
+$page-highlighted-background-color     : $row-background-color-lite;
 
 // Features.
 $page-features-color                   : $text-color;
-$page-features-background-color        : #d3d3d3;
+$page-features-background-color        : $row-background-color-medium;
 
 // Content prefix.
 $page-content-prefix-color             : $text-color;
-$page-content-prefix-background-color  : $regions-background-color;
+$page-content-prefix-background-color  : $row-background-color-lite;
 
 // Main.
 $page-main-color                       : $text-color;
-$page-main-background-color            : $regions-background-color;
+$page-main-background-color            : $row-background-color-lite;
 
 // Content suffix.
 $page-content-suffix-color             : $text-color;
-$page-content-suffix-background-color  : $regions-background-color;
+$page-content-suffix-background-color  : $row-background-color-lite;
 
 // Sub features.
 $page-subfeatures-color                : $text-color;
-$page-subfeatures-background-color     : #d3d3d3;
+$page-subfeatures-background-color     : $row-background-color-medium;
 
 // Footer.
 $page-footer-color                     : #ffffff;
-$page-footer-background-color          : #666666;
+$page-footer-background-color          : $row-background-color-very-dark;
 
 
 // Branding
@@ -300,19 +318,22 @@ $menu-border-width                 : $border-width;
 $menu-border-style                 : $border-style;
 $menu-border-radius                : $border-radius;
 
+$menu-item-padding                 : $min-line-padding;
+$menu-item-margin                  : $min-line-margin;
+
 $menu-arrows                       : false;
 
 
 // Responsive Menus
 // -----------------------------------------------------------------------------
-$resp-menu-color                   : inherit;
-$resp-menu-background-color        : inherit;
+$resp-menu-color                   : $page-navbar-color;
+$resp-menu-background-color        : $page-navbar-background-color;
 
-$resp-menu-hover-color             : inherit;
-$resp-menu-active-color            : inherit;
+$resp-menu-hover-color             : $page-navbar-color;
+$resp-menu-active-color            : $page-navbar-color;
 
-$resp-menu-hover-background-color  : rgba(255, 255, 255, 0.095);
-$resp-menu-active-background-color : rgba(255, 255, 255, 0.095);
+$resp-menu-hover-background-color  : $page-navbar-hover-background-color;
+$resp-menu-active-background-color : $page-navbar-hover-background-color;
 
 $resp-menu-z-index                 : 480;
 $resp-menu-arrows                  : true;
@@ -320,6 +341,9 @@ $resp-menu-arrows                  : true;
 // Drop Menu
 $dropmenu-item-width               : 12em;
 $dropmenu-arrows                   : true;
+
+// Slidedown
+$slidedown-background-color        : $row-background-color-very-lite;
 
 
 // Nodes
@@ -356,7 +380,8 @@ $form-border-width                 : $border-width;
 $form-border-style                 : $border-style;
 $form-border-radius                : $border-radius;
 
-$form_input_button_select_height   : 32px;
+$form_input_height                 : $xx-large;
+$form_input_button_select_height   : $form_input_height;
 $form-box-shadow                   : false;
 
 $form-details-background-color     : $regions-background-color;
@@ -483,9 +508,11 @@ $tr-hover-color                    : $text-background-color-normal;
 // Fields
 // -----------------------------------------------------------------------------
 // By default we only have settings for taxonomy term reference fields (tags).
-$field-taxonomy-item-as-labels     : false;
-$field-taxonomy-item-icons         : false;
-$field-taxonomy-label-as-icon      : false; // Label must not be hidden in field display settings.
+$field-taxonomy-item-as-labels        : false;
+$field-taxonomy-item-icons            : false;
+$field-taxonomy-label-as-icon         : false; // Label must not be hidden in field display settings.
+$field-taxonomy-items-comma-separated : true;
+$field-taxonomy-items-inline          : true;
 
 
 // Font Icons
@@ -576,4 +603,5 @@ $preview-background-color          : #ffffea;
 // -----------------------------------------------------------------------------
 // Patterns are image files that can be set on the page and row backgrounds.
 $patterns: null; // A list of pattern file names
+
 

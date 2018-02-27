@@ -18,7 +18,7 @@ table {
   .view-table__details {
     padding: 0;
     @include output-rhythm(margin, 0 0 $medium);
-    @include adjust-font-size-to($medium);
+    @include output-rhythm(font-size, $medium);
   }
 
   .view-table__details,

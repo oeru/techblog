@@ -8,26 +8,24 @@
 @include establish-baseline;
 
 
+body {
+  font-family: $base-font-family;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  [dir="rtl"] & {
+    text-align: right;
+  }
+}
+
+
 html,
 body {
   height: 100%;
 }
 
 
-html {
-  font-family: $base-font-family;
-  @include adjust-leading-to(4);
-}
-
-
-body {
-  @include adjust-font-size-to($medium);
-  padding: 0;
-  margin: 0;
-}
-
-
-// Use border-box globally.
 * {
   box-sizing: border-box;
 }
@@ -67,37 +65,49 @@ fieldset {
 
 
 // Headings.
-#{headings(all)} {
+// TODO media queries for heading font sizes and line heights.
+h1, h2, h3, h4, h5, h6 {
   @include output-rhythm(margin, 0 0 $medium);
+  line-height: 1.125;
 }
 
-
-#{headings(1,4)} {}
-
-
-#{headings(1,3)} {
+h1, h2, h3, h5 {
   font-weight: $font-weight-normal;
 }
 
-
-#{headings(4,6)} {
+h4, h6 {
   font-weight: $font-weight-semibold;
 }
 
-
-h1, .h1 {@include adjust-font-size-to($xxx-large)}
-h2, .h2 {@include adjust-font-size-to($xx-large)}
-h3, .h3 {@include adjust-font-size-to($x-large)}
-h4, .h4 {@include adjust-font-size-to($large)}
-h5, .h5 {@include adjust-font-size-to($medium)}
-h6, .h6 {@include adjust-font-size-to($small)}
-
+// Mobile Heading Sizes
+h1, .h1 {@include output-rhythm(font-size, $xx-large)}
+h2, .h2 {@include output-rhythm(font-size, $x-large)}
+h3, .h3 {@include output-rhythm(font-size, $large)}
+h4, .h4,
+h5, .h5 {@include output-rhythm(font-size, $medium)}
+h6, .h6 {@include output-rhythm(font-size, $small)}
 
 // Using the small element to control font size, an idea lifted from Bootstrap.
-h1 small, .h1 small {@include adjust-font-size-to($x-large)}
-h2 small, .h2 small {@include adjust-font-size-to($large)}
+h1 small, .h1 small {@include output-rhythm(font-size, $x-large)}
+h2 small, .h2 small {@include output-rhythm(font-size, $large)}
 h3 small, .h3 small,
-h4 small, .h4 small {@include adjust-font-size-to($medium)}
+h4 small, .h4 small {@include output-rhythm(font-size, $medium)}
+
+// Wide Heading Sizes
+@media #{$wide} {
+  h1, .h1 {@include output-rhythm(font-size, $xxx-large)}
+  h2, .h2 {@include output-rhythm(font-size, $xx-large)}
+  h3, .h3 {@include output-rhythm(font-size, $x-large)}
+  h4, .h4,
+  h5, .h5 {@include output-rhythm(font-size, $large)}
+  h6, .h6 {@include output-rhythm(font-size, $medium)}
+
+  // Using the small element to control font size, an idea lifted from Bootstrap.
+  h1 small, .h1 small {@include output-rhythm(font-size, $xx-large)}
+  h2 small, .h2 small {@include output-rhythm(font-size, $x-large)}
+  h3 small, .h3 small {@include output-rhythm(font-size, $large)}
+  h4 small, .h4 small {@include output-rhythm(font-size, $medium)}
+}
 
 
 // Paragraph.
@@ -108,6 +118,9 @@ p {
   }
 }
 
+small {
+  @include output-rhythm(font-size, $small);
+}
 
 // Media.
 img {
@@ -128,8 +141,11 @@ video {
 
 // Video element gets width 100%, slightly dangerous.
 video {
-  width: 100% !important;
-  height: auto !important;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  overflow: hidden;
 }
 
 
@@ -156,8 +172,10 @@ svg {
 
 // Global caption style.
 figcaption {
-  @include adjust-font-size-to($medium * 0.75);
+  @include output-rhythm(font-size, $medium * 0.75);
+  @include output-rhythm(line-height, $medium * 1.25);
   @include output-rhythm(padding, $xx-small 0);
+  margin: auto; // automatic centering, mitigates issues when the viewport is zoomed.
 }
 
 
@@ -228,7 +246,10 @@ blockquote {
   }
 
   p {
-    @include adjust-font-size-to($large);
+    @media #{$wide} {
+      @include output-rhythm(font-size, $large);
+    }
+
     font-weight: $font-weight-light;
 
     &:first-child {
@@ -262,7 +283,6 @@ blockquote {
 
   small {
     display: block;
-    @include adjust-font-size-to($medium * 0.875);
 
     &:before {
       content: '\2014 \00A0'; // EM DASH, NBSP
@@ -322,10 +342,10 @@ pre {
 }
 
 
-// Set hidden styles for non-supporting browsers.
-*[hidden] {
-  display: none;
+// Polyfill hidden for IE8/9/10, hide Firefox template element.
+[hidden],
+template {
+  display: none !important;
 }
-
 
 

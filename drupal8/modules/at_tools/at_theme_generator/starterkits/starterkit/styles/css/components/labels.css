@@ -10,8 +10,13 @@
 .more-help-link {
   text-align: left;
 }
+
 [dir="rtl"] .more-help-link {
   text-align: right;
+}
+
+.filter-help a {
+  display: block;
 }
 
 .filter-help a:after {
@@ -23,6 +28,7 @@
   height: auto;
   margin: 0;
 }
+
 [dir="rtl"] .filter-help a:after {
   left: auto;
 }
@@ -31,6 +37,7 @@
   background-color: transparent;
   margin-right: 0;
 }
+
 .filter-help a:after, .more-help-link a:after {
   font-family: FontAwesome, sans-serif;
   content: "";
@@ -39,12 +46,11 @@
   text-align: right;
   background-color: transparent;
   background-image: none;
-  width: 16px;
   width: 1rem;
   display: none;
 }
+
 .fa-loaded .filter-help a:after, .fa-loaded .more-help-link a:after {
   display: inline-block;
 }
-
-/*# sourceMappingURL=maps/labels.css.map */
+/*# sourceMappingURL=labels.css.map */

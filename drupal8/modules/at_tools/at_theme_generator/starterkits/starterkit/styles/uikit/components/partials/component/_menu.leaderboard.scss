@@ -4,18 +4,25 @@
 
 // Region or row specific menu overrides
 .pr-leaderboard {
-  // Horizontal leaderboard menus by default.
+
   .block-menu {
     margin: 0;
-
-    .menu a:after {
-      content: none;
-      display: none;
-    }
 
     .menu-level-1 {
       @include list-horizontal($flow-from, $margin: (t: $xxx-small, r: $medium, b: $xxx-small, l: 0), $list-item-selector: '.menu__item');
     }
   }
+
+  &.rm-row {
+    .block-menu {
+      float: #{$flow-to};
+    }
+  }
+
+  .menu .menu__link:after {
+    content: none;
+    display: none;
+  }
 }
+
 

@@ -7,20 +7,22 @@
 .messages {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  padding: 16px;
-  padding: 1rem;
-  margin: 26px 0;
-  margin: 1.625rem 0;
+  padding: 1.25em;
+  margin: 1.25em 0;
   border: 1px solid;
   border-radius: 2px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
+
 .messages + .messages {
-  margin-top: 18px;
-  margin-top: 6px;
-  margin-top: 0.375rem;
+  margin-top: 20px;
+  margin-top: 1.5rem;
 }
+
 .messages .container {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .messages__list {
@@ -29,14 +31,15 @@
   padding: 0;
   margin: 0;
 }
+
 .messages__list + .messages__item {
-  margin-top: 6px;
-  margin-top: 0.375rem;
+  margin-top: 1.5rem;
 }
+
 .messages__list .item-list ul {
-  margin: 18px 0;
-  margin: 1.125rem 0;
+  margin: 1.25rem 0;
 }
+
 .messages__list .item-list ul li {
   list-style: square;
 }
@@ -88,17 +91,16 @@ table tr.error {
   font-family: FontAwesome, sans-serif;
   float: left;
   vertical-align: top;
-  padding: 0 11px 0 0;
-  padding: 0 0.6875rem 0 0;
+  padding: 0 0.75rem 0 0;
   display: none;
 }
+
 .fa-loaded .messages .icon:before {
   display: block;
 }
 
 [dir="rtl"] .messages .icon:before {
-  padding: 0 0 0 11px;
-  padding: 0 0 0 0.6875rem;
+  padding: 0 0 0 0.75rem;
   float: right;
 }
 
@@ -113,5 +115,4 @@ table tr.error {
 .icon-error:before {
   content: "";
 }
-
-/*# sourceMappingURL=maps/messages.css.map */
+/*# sourceMappingURL=messages.css.map */

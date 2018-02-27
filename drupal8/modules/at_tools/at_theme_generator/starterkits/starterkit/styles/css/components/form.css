@@ -7,10 +7,7 @@ input,
 select,
 button,
 textarea {
-  font-size: 16px;
   font-size: 1rem;
-  line-height: 21px;
-  line-height: 1.3125rem;
 }
 
 textarea,
@@ -29,11 +26,16 @@ input[type="time"],
 input[type="url"],
 input[type="week"] {
   max-width: 100%;
-  box-sizing: border-box;
+  width: 99.999%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-radius: 2px;
   border: 1px solid;
+  -webkit-transition: all, 225ms, ease-in-out;
+  -o-transition: all, 225ms, ease-in-out;
   transition: all, 225ms, ease-in-out;
 }
+
 textarea:focus,
 select:focus,
 input[type="date"]:focus,
@@ -52,6 +54,7 @@ input[type="week"]:focus {
   outline: 0;
   outline: thin dotted \9;
 }
+
 textarea[disabled],
 select[disabled],
 input[type="date"][disabled],
@@ -71,21 +74,17 @@ input[type="week"][disabled] {
 }
 
 input {
-  min-width: 13px;
   line-height: 1;
   vertical-align: middle;
-  height: 32px;
   height: 2rem;
-  padding: 0 7px;
-  padding: 0 0.4375rem;
+  padding: 0 0.5rem;
 }
 
 input[type="checkbox"], input[type="radio"] {
+  min-width: 13px;
   display: inline-block;
   position: relative;
-  bottom: 1px;
   bottom: 0.0625rem;
-  margin-left: 3px;
   margin-left: 0.1875rem;
   width: auto;
   height: auto;
@@ -121,13 +120,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 }
 
 select {
-  height: 32px;
   height: 2rem;
 }
 
 textarea {
-  padding: 7px;
-  padding: 0.4375rem;
+  padding: 0.5rem;
 }
 
 textarea,
@@ -142,6 +139,7 @@ label {
   white-space: nowrap;
   display: block;
 }
+
 label.option {
   font-weight: normal;
   display: inline-block;
@@ -157,38 +155,96 @@ details {
   border: 1px solid;
   border-radius: 2px;
   display: block;
-  margin: 16px 0;
   margin: 1rem 0;
-  max-height: 50px;
   max-height: 3.125rem;
   overflow-y: hidden;
+  -webkit-transition: all 450ms ease-in-out;
+  -o-transition: all 450ms ease-in-out;
   transition: all 450ms ease-in-out;
 }
+
 details:focus {
   outline: none !important;
 }
+
 details .details-wrapper {
+  -webkit-transition: all 650ms ease-in-out;
+  -o-transition: all 650ms ease-in-out;
   transition: all 650ms ease-in-out;
 }
+
+details > summary:before {
+  font-family: FontAwesome, sans-serif;
+  float: left;
+  margin: -1px 0 0;
+  height: 1rem;
+  width: 1rem;
+  display: none;
+}
+
+.fa-loaded details > summary:before {
+  display: block;
+}
+
+[dir="rtl"] details > summary:before {
+  float: right;
+}
+
+details[open] > summary:before {
+  content: "";
+}
+
+details:not([open]) > summary:before {
+  content: "";
+}
+
+[dir="rtl"] details:not([open]) > summary:before {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
 .js details:not([open]) .details-wrapper {
   display: block;
   visibility: hidden;
   opacity: 0.1;
 }
-.js details[open] {
-  max-height: 2000px;
+
+.js details:not([open]) > summary:before {
+  content: "";
 }
+
+[dir="rtl"] .js details:not([open]) > summary:before {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+.js details[open] {
+  max-height: 2500px;
+  overflow: scroll;
+}
+
 .js details[open] .details-wrapper {
   opacity: 1;
   visibility: visible;
 }
 
+.js details[open] > summary:before {
+  content: "";
+}
+
 summary {
   cursor: pointer;
   display: block;
-  padding: 10px;
   padding: 0.625rem;
   outline: 0;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
 }
 
 button[disabled],
@@ -198,7 +254,8 @@ select[disabled] option,
 select[disabled] optgroup,
 textarea[disabled],
 a.button_disabled {
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   opacity: 0.7;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -212,7 +269,8 @@ button:invalid,
 .button:invalid,
 select:invalid,
 textarea:invalid {
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 input:focus::-webkit-input-placeholder {
@@ -240,86 +298,92 @@ input:focus:-ms-input-placeholder {
      -moz-appearance: none;
           appearance: none;
 }
+
 .form-text[name="subject[0][value]"] {
   width: 50%;
 }
 
-@media all and (max-width: 45em) {
+@media screen and (max-width: 45em) {
   .form-text[name="subject[0][value]"] {
     width: 100%;
   }
 }
+
+.form-type-select__select-wrapper:not(.is-multiple) {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.form-type-select__select-wrapper:not(.is-multiple):after {
+  font-family: FontAwesome, sans-serif;
+  content: "\f0dc";
+  position: absolute;
+  top: 0.25rem;
+  right: 0.75rem;
+  pointer-events: none;
+  display: none;
+}
+
+.form-type-select__select-wrapper.is-multiple {
+  display: block;
+}
+
 .form-select {
   min-width: 50%;
+  margin: 0;
+  font-size: 16px;
+}
+
+@supports ((-webkit-appearance: none) or (-moz-appearance: none) or (appearance: none)) or ((-moz-appearance: none) and (mask-type: alpha)) {
+  .fa-loaded .form-type-select__select-wrapper:not(.is-multiple):after {
+    display: block;
+  }
+  .form-type-select__select-wrapper:not(.is-multiple) .form-select {
+    text-indent: 0.1875rem;
+    padding-right: 1.5rem;
+    margin-right: 0.5rem;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+  }
 }
 
 .form-item,
 .form-radios,
 .form-checkboxes {
-  margin: 0 0 16px;
   margin: 0 0 1rem;
 }
 
-.form-type-radio,
-.form-type-checkbox {
-  margin-left: 6px;
-  margin-left: 0.375rem;
-}
 .form-type-radio .option,
 .form-type-checkbox .option {
-  padding: 4px 7px 4px 29px;
-  padding: 0.25rem 0.4375rem 0.25rem 1.8125rem;
-  margin-left: -30px;
-  margin-left: -1.875rem;
-  min-height: 29px;
-  min-height: 1.8125rem;
-  min-width: 50%;
-  border: 1px solid;
+  padding: 0.3125rem 0.5rem;
   border-radius: 2px;
 }
+
 .form-type-radio .option:focus, .form-type-radio .option:hover,
 .form-type-checkbox .option:focus,
 .form-type-checkbox .option:hover {
   cursor: pointer;
 }
 
-.ui-dialog {
-  margin: 6px;
-  margin: 0.375rem;
-}
-.ui-dialog .form-type-radio,
-.ui-dialog .form-type-checkbox {
-  display: block;
-}
-.ui-dialog .form-type-radio *,
-.ui-dialog .form-type-checkbox * {
-  margin: 0;
-  padding: 0;
-}
-.ui-dialog .form-type-radio .option,
-.ui-dialog .form-type-checkbox .option {
-  padding: 4px;
-  padding: 0.25rem;
-  min-width: 0;
-  border: none;
-  border-radius: 0;
-}
-.ui-dialog .form-type-radio.js-form-item-attributes-data-align {
-  float: left;
-  margin-right: 12px;
-  margin-right: 0.75rem;
-}
-.ui-dialog .container-inline label:after {
-  content: '';
-}
-.ui-dialog .form-file {
-  padding: 7px 0;
-  padding: 0.4375rem 0;
+.form-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin: 1rem 0;
 }
 
-.form-actions {
-  margin: 16px 0;
-  margin: 1rem 0;
+.form-actions .button {
+  margin-right: 0.25rem;
 }
 
 .field-type-text-long textarea {
@@ -330,7 +394,8 @@ input:focus:-ms-input-placeholder {
   display: block;
   margin: 0;
   width: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .text-format-wrapper .text-full {
@@ -340,20 +405,51 @@ input:focus:-ms-input-placeholder {
 .filter-wrapper {
   border: 1px solid;
   border-top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.filter-wrapper .form-type-select__select-wrapper,
+.filter-wrapper .form-type-select__select-wrapper select {
+  width: auto !important;
+}
+
+.filter-guidelines {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+}
+
+.filter-guidelines .filter-guidelines-item {
+  margin: 0.75rem 0;
+}
+
+.filter-help {
+  float: none;
+  margin-right: auto;
+  font-size: 0.875rem;
 }
 
 .tips {
   padding-left: 0;
+  font-size: 0.875rem;
 }
+
 .tips li {
   list-style: none;
 }
 
 .description {
-  font-size: 11px;
-  font-size: 0.6875rem;
-  line-height: 15px;
-  line-height: 0.9375rem;
+  font-size: 0.75rem;
 }
 
 h4.label,
@@ -365,13 +461,24 @@ h4.label,
 }
 
 .form-required:after {
-  content: " \204E ";
+  font-family: sans-serif;
+  content: " \002A ";
   line-height: 1;
-  vertical-align: super;
 }
 
-abbr.form-required, abbr.tabledrag-changed, abbr.ajax-changed {
+abbr.form-required, abbr.ajax-changed {
   border-bottom: none;
+}
+
+abbr.tabledrag-changed {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  word-wrap: normal;
+  font: 0/0 a;
 }
 
 .form-item input.error,
@@ -381,21 +488,37 @@ abbr.form-required, abbr.tabledrag-changed, abbr.ajax-changed {
 }
 
 .container-inline {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
+
+.container-inline div,
+.container-inline label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 0.375rem;
+}
+
 .container-inline label:after {
   content: ':';
 }
+
 .container-inline .form-actions, .container-inline.form-actions {
   margin-top: 0;
   margin-bottom: 0;
 }
 
+.container-inline .yamlform-flex--container > .form-item {
+  margin-right: 0.375rem;
+}
+
 .form-type-radios .container-inline label:after {
   content: none;
 }
+
 .form-type-radios .container-inline .form-type-radio {
-  margin: 0 16px;
   margin: 0 1rem;
 }
 
@@ -404,61 +527,30 @@ abbr.form-required, abbr.tabledrag-changed, abbr.ajax-changed {
   margin-right: 0.5em;
   margin-top: 1px;
 }
+
 @media screen and (min-width: 321px) {
   .form-composite--inline legend {
     margin-right: 1em;
   }
 }
+
 .form-composite--inline .fieldset-legend:after {
   content: ':';
 }
+
 .form-composite--inline input[type="radio"],
 .form-composite--inline label {
   vertical-align: middle;
 }
+
 .form-composite--inline label:after {
   content: none;
 }
+
 @media screen and (min-width: 480px) {
   .form-composite--inline .form-item {
     margin-right: 1.25em;
   }
-}
-
-form .field-type-image .image-preview {
-  padding: 0;
-  background: transparent;
-  margin: 0 16px 16px 0;
-  margin: 0 1rem 1rem 0;
-}
-[dir="rtl"] form .field-type-image .image-preview {
-  margin: 0 0 16px 16px;
-  margin: 0 0 1rem 1rem;
-}
-form .field-type-image .image-widget-data > div:first-child {
-  margin-top: 0;
-}
-form .field-edit-link {
-  margin: 0 0.3em;
-}
-form .field-multiple-table {
-  margin: 0;
-}
-form .field-multiple-table .field-multiple-drag {
-  width: 30px;
-  padding-right: 0;
-}
-form .field-multiple-table .field-multiple-drag .tabledrag-handle {
-  padding-right: .5em;
-}
-[dir="rtl"] form .field-multiple-table .field-multiple-drag {
-  padding-left: 0;
-}
-[dir="rtl"] form .field-multiple-table .field-multiple-drag .tabledrag-handle {
-  padding-left: .5em;
-}
-form .field-add-more-submit {
-  margin: .5em 0 0;
 }
 
 .ui-autocomplete li.ui-menu-item a.ui-state-focus,
@@ -469,28 +561,27 @@ form .field-add-more-submit {
 }
 
 details > .details-wrapper {
-  margin: 16px;
   margin: 1rem;
 }
 
 .collapse-processed > summary {
-  padding: 10px;
   padding: 0.625rem;
 }
+
 .collapse-processed > summary:before {
   font-family: FontAwesome, sans-serif;
   content: "";
   float: left;
   margin: -1px 0 0;
-  height: 16px;
   height: 1rem;
-  width: 16px;
   width: 1rem;
   display: none;
 }
+
 .fa-loaded .collapse-processed > summary:before {
   display: block;
 }
+
 [dir="rtl"] .collapse-processed > summary:before {
   float: right;
 }
@@ -498,6 +589,7 @@ details > .details-wrapper {
 .collapse-processed:not([open]) > summary:before {
   content: "";
 }
+
 [dir="rtl"] .collapse-processed:not([open]) > summary:before {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
   -webkit-transform: scale(-1, 1);
@@ -511,16 +603,20 @@ details > .details-wrapper {
 
 .block-list-secondary {
   border-bottom-width: 1px;
-  box-sizing: border-box;
-  padding: 0 11px;
-  padding: 0 0.6875rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 0.75rem;
 }
 
 .reset-appearance {
+  -webkit-transition: none;
+  -o-transition: none;
   transition: none;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   border-radius: 0;
 }
+
 .reset-appearance:hover, .reset-appearance:focus {
   background: none;
   color: inherit;
@@ -533,6 +629,7 @@ details > .details-wrapper {
 .field-storage-config-edit-form .container-inline {
   display: block;
 }
+
 .field-storage-config-edit-form .form-select {
   min-width: unset;
 }
@@ -551,28 +648,35 @@ details > .details-wrapper {
  ============================================================================ */
 button,
 .button {
-  max-width: 100%;
   width: auto;
   position: relative;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-radius: 2px;
   border-width: 1px;
   border-style: solid;
+  -webkit-transition: background-color, .15s, ease-in-out;
+  -o-transition: background-color, .15s, ease-in-out;
   transition: background-color, .15s, ease-in-out;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   font-weight: 400;
   white-space: nowrap;
-  height: 32px;
   height: 2rem;
-  padding: 0 10px;
   padding: 0 0.625rem;
 }
+
 button:hover, button:focus,
 .button:hover,
 .button:focus {
   text-decoration: none;
+}
+
+a.button {
+  display: inline-block;
+  text-align: center;
+  line-height: 2rem;
 }
 
 .un-button,
@@ -580,7 +684,8 @@ button:hover, button:focus,
 .un-button:focus,
 .un-button:active {
   border: none;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   background-color: inherit;
   color: inherit;
   padding: 0;
@@ -591,45 +696,41 @@ button:hover, button:focus,
 
 .button--danger {
   border: 0;
-  float: right;
-  position: relative;
-  top: 3px;
-  top: 0.1875rem;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .button-action {
   display: inline-block;
 }
+
 .button-action:before {
   font-family: FontAwesome, sans-serif;
   content: "";
   vertical-align: middle;
-  font-size: 11px;
-  font-size: 0.6875rem;
-  padding-right: 4px;
+  font-size: 0.75rem;
   padding-right: 0.25rem;
-  line-height: 32px;
   line-height: 2rem;
   display: none;
 }
+
 .fa-loaded .button-action:before {
   display: inline-block;
 }
+
 .button-action[data-drupal-link-system-path="user/login"]:before {
   content: "";
   vertical-align: baseline;
-  font-size: 16px;
   font-size: 1rem;
-  padding-right: 7px;
   padding-right: 0.4375rem;
 }
 
 .action-links__button {
   padding: 0;
-  margin: 16px 0;
   margin: 1rem 0;
 }
-@media all and (max-width: 45em) {
+
+@media screen and (max-width: 45em) {
   .action-links__button a {
     display: block;
   }
@@ -638,7 +739,6 @@ button:hover, button:focus,
 li[class*="action--"] {
   list-style: none;
   padding: 0;
-  margin: 16px 0;
   margin: 1rem 0;
 }
 
@@ -651,51 +751,55 @@ li[class*="action--"] {
 .dropbutton-wrapper {
   display: block;
   position: relative;
-  min-height: 32px;
   min-height: 2rem;
-  margin-right: 4px;
   margin-right: 0.25rem;
-  margin-bottom: 16px;
   margin-bottom: 1rem;
 }
 
 .dropbutton input {
   text-align: left;
-  height: 30px;
   height: 1.875rem;
 }
+
 .dropbutton .dropbutton-action > * {
   white-space: nowrap;
   line-height: normal;
-  padding: 0 10px;
-  padding: 0 0.625rem;
 }
+
 .dropbutton .dropbutton-action a {
-  padding: 2px 10px;
   padding: 0.125rem 0.625rem;
 }
+
 .dropbutton .secondary-action {
   border-top: 1px solid;
   border-radius: 0 0 0 2px;
 }
+
 .dropbutton .secondary-action .button {
   border: 0;
   width: 100%;
 }
+
 .dropbutton .secondary-action .button:hover, .dropbutton .secondary-action .button:focus {
   border-radius: 0 0 0 2px;
 }
+
 .dropbutton .dropbutton-toggle button {
   background: none;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
+
 .dropbutton .dropbutton-toggle button:hover, .dropbutton .dropbutton-toggle button:focus, .dropbutton .dropbutton-toggle button:active {
   background: none;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
+
 [dir="rtl"] .dropbutton {
   margin: 0 3px 0 0;
 }
+
 [dir="rtl"] .dropbutton input {
   text-align: right;
 }
@@ -703,27 +807,36 @@ li[class*="action--"] {
 .dropbutton-multiple .dropbutton {
   border-right: 1px solid;
 }
+
 .dropbutton-multiple .dropbutton .dropbutton-action > * {
   margin-right: 0;
   border: 0;
 }
+
 .dropbutton-multiple .dropbutton .dropbutton-action .button {
   border-radius: 2px 0 0 2px;
   width: 100%;
+  border: 0;
+  margin: 0;
 }
+
 [dir="rtl"] .dropbutton-multiple .dropbutton {
   border-left: 1px solid;
   border-right: 0;
 }
+
 [dir="rtl"] .dropbutton-multiple .dropbutton .dropbutton-action > * {
   margin-left: 0;
 }
+
 .dropbutton-multiple.open .dropbutton-action .button {
   border-radius: 2px 0 0 0;
 }
+
 .dropbutton-multiple .dropbutton .secondary-action .button {
   border-radius: 0 0 0 2px;
 }
+
 .dropbutton-multiple .dropbutton .secondary-action .button:hover, .dropbutton-multiple .dropbutton .secondary-action .button:focus {
   border-radius: 0 0 0 2px;
 }
@@ -732,12 +845,14 @@ button.link, button.link:hover, button.link:focus {
   color: #0066cc;
   background-color: transparent;
   border: 0;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   opacity: 1;
   margin: 0;
   padding: 0;
   cursor: pointer;
 }
+
 button.tableresponsive-toggle {
   float: right;
   overflow: hidden;
@@ -750,6 +865,7 @@ label button.link {
 .ui-button-text-only .ui-button-text {
   padding: 0;
 }
+
 .ui-button-text-only button:hover, .ui-button-text-only button:focus,
 .ui-button-text-only .button:hover,
 .ui-button-text-only .button:focus {
@@ -757,22 +873,24 @@ label button.link {
   color: #292929 !important;
 }
 
+.tabledrag-toggle-weight {
+  font-size: 0.75rem;
+}
+
 /**
  * Inline form styles.
  ============================================================================ */
 .form--inline .form-item {
   float: left;
-  margin-right: 11px;
-  margin-right: 0.6875rem;
+  margin-right: 0.75rem;
 }
+
 .form--inline .form-item-separator {
-  margin-top: 18px;
-  margin-top: 1.125rem;
-  margin-right: 16px;
+  margin-top: 1.25rem;
   margin-right: 1rem;
-  margin-left: 11px;
-  margin-left: 0.6875rem;
+  margin-left: 0.75rem;
 }
+
 .form--inline .form-actions {
   clear: left;
 }
@@ -784,20 +902,28 @@ label button.link {
  * @see progress.js
  ============================================================================ */
 .progress {
-  margin: 18px 0;
-  margin: 1.125rem 0;
+  margin: 1.25rem 0;
 }
+
 .progress__track {
   border-color: #b3b3b3;
   border-radius: 10em;
   background-color: #f2f1eb;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e7e7df), to(#f0f0f0));
+  background-image: -webkit-linear-gradient(#e7e7df, #f0f0f0);
+  background-image: -o-linear-gradient(#e7e7df, #f0f0f0);
   background-image: linear-gradient(#e7e7df, #f0f0f0);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.16);
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.16);
 }
+
 .progress__bar {
   border: 1px #07629a solid;
   background-color: #057ec9;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), linear-gradient(to right bottom, #0094f0 0%, #0094f0 25%, #007ecc 25%, #007ecc 50%, #0094f0 50%, #0094f0 75%, #0094f0 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.15))), -webkit-gradient(linear, left top, right bottom, from(#0094f0), color-stop(25%, #0094f0), color-stop(25%, #007ecc), color-stop(50%, #007ecc), color-stop(50%, #0094f0), color-stop(75%, #0094f0), to(#0094f0));
+  background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.15)), -webkit-linear-gradient(left top, #0094f0 0%, #0094f0 25%, #007ecc 25%, #007ecc 50%, #0094f0 50%, #0094f0 75%, #0094f0 100%);
+  background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.15)), -o-linear-gradient(left top, #0094f0 0%, #0094f0 25%, #007ecc 25%, #007ecc 50%, #0094f0 50%, #0094f0 75%, #0094f0 100%);
+  background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.15)), linear-gradient(to right bottom, #0094f0 0%, #0094f0 25%, #007ecc 25%, #007ecc 50%, #0094f0 50%, #0094f0 75%, #0094f0 100%);
   background-size: 40px 40px;
   margin-top: -1px;
   margin-left: -1px;
@@ -806,6 +932,8 @@ label button.link {
   border-radius: 10em;
   -webkit-animation: animate-stripes 3s linear infinite;
           animation: animate-stripes 3s linear infinite;
+  -webkit-transition: width 0.5s ease-out;
+  -o-transition: width 0.5s ease-out;
   transition: width 0.5s ease-out;
 }
 
@@ -826,6 +954,7 @@ label button.link {
     background-position: 0 0, -80px 0;
   }
 }
+
 /**
  * Form Tables
  * Table select and table drag are form elements.
@@ -833,6 +962,7 @@ label button.link {
 tr.drag {
   background-color: #fffff1;
 }
+
 tr.drag-previous {
   background-color: #ffd;
 }
@@ -868,13 +998,13 @@ tr .form-item {
 }
 
 .js .field--widget-entity-reference-paragraphs td {
-  padding: 16px;
   padding: 1rem;
 }
+
 .js .field--widget-entity-reference-paragraphs td.field-multiple-drag {
-  padding: 16px 6px;
   padding: 1rem 0.375rem;
 }
+
 .js .field--widget-entity-reference-paragraphs a.tabledrag-handle .handle {
   margin: -0.4em 0.5em 0 0;
 }
@@ -901,28 +1031,125 @@ tr .form-item {
 .exposed-filters .filters,
 .exposed-filters .additional-filters {
   float: left;
-  margin-right: 16px;
   margin-right: 1rem;
 }
+
 .exposed-filters .form-item {
   margin: 0 0 0.1em 0;
   padding: 0;
 }
+
 .exposed-filters .form-item label {
   float: left;
   font-weight: 400;
   width: 10em;
 }
+
 .exposed-filters .form-select {
   width: 14em;
 }
+
 .exposed-filters .current-filters {
-  margin-bottom: 16px;
   margin-bottom: 1rem;
 }
+
 .exposed-filters .current-filters .placeholder {
   font-style: normal;
   font-weight: 700;
 }
 
-/*# sourceMappingURL=maps/form.css.map */
+/**
+ * Field widgets.
+ ============================================================================ */
+form .field-edit-link {
+  margin: 0 0.3em;
+}
+
+form .field-multiple-table {
+  margin: 0;
+}
+
+form .field-multiple-table .field-multiple-drag {
+  width: 30px;
+  padding-right: 0;
+}
+
+form .field-multiple-table .field-multiple-drag .tabledrag-handle {
+  padding-right: .5em;
+}
+
+[dir="rtl"] form .field-multiple-table .field-multiple-drag {
+  padding-left: 0;
+}
+
+[dir="rtl"] form .field-multiple-table .field-multiple-drag .tabledrag-handle {
+  padding-left: .5em;
+}
+
+form .field-add-more-submit {
+  margin: .5em 0 0;
+}
+
+.field--widget-image-image {
+  padding: 0.625em;
+  border: 1px solid;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+.field--widget-image-image .form-file {
+  padding: 0;
+}
+
+.field--widget-image-image .form-type-managed-file {
+  margin-bottom: 0;
+}
+
+.field--widget-image-image .image-preview {
+  padding: 0 0 1rem;
+}
+
+.field--widget-image-image .image-widget-data > div:first-child {
+  margin-top: 0;
+}
+
+.field--widget-image-image .image-widget-data .form-submit {
+  float: right;
+  margin: 0;
+}
+
+.field--widget-image-image details {
+  margin: -0.625em;
+  border: 0;
+}
+
+.field--widget-image-image details table .button {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+div[class*="field--widget-entity-reference"] .responsive-table {
+  margin: 0;
+}
+
+div[class*="field--widget-entity-reference"] div.clearfix:last-child {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+div[class*="field--widget-entity-reference"] div.clearfix:last-child .dropbutton-wrapper {
+  margin: 0 0.25rem 0 0;
+}
+
+div[class*="field--widget-entity-reference"] div.clearfix:last-child .placeholder {
+  padding: 0 0.25rem;
+}
+/*# sourceMappingURL=form.css.map */

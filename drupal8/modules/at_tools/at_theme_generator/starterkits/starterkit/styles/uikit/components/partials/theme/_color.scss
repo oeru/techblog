@@ -9,7 +9,6 @@
  *   safer to place colors in a partial that is not parsed by the Color module.
  ============================================================================ */
 
-
 /**
  * base.elements
  ============================================================================ */
@@ -188,19 +187,6 @@ samp {
 
 // Leaderboard
 .pr-leaderboard {    // Outer wrapper.
-  color: $page-leaderboard-color;
-
-  .menu a {
-    color: inherit;
-
-    &.active,
-    &:hover,
-    &:focus {
-      color: inherit;
-    }
-  }
-
-
   &__rw {}           // Regions wrapper (container that takes max-width from your layout settings).
   &__leaderboard {}  // Region.
 }
@@ -224,12 +210,6 @@ samp {
 
   .menu a {
     color: inherit;
-
-    &.active,
-    &:hover,
-    &:focus {
-      color: inherit;
-    }
   }
 
   &__rw {}
@@ -345,13 +325,22 @@ samp {
 
 .block--system-branding-block {}
 
-.site-branding-text {
-  a {}
+.site-branding-text {}
+
+.site-branding__name-link {
+  &:link,
+  &:visited {
+    color: $text-color-medium;
+  }
+
+  &:hover,
+  &:active {
+    color: $text-color;
+  }
 }
 
-.site-logo {}
-.site-name {}
-.site-slogan {}
+.site-branding__logo-link {}
+.site-branding__slogan {}
 
 
 /**
@@ -370,7 +359,7 @@ samp {
  ============================================================================ */
 
 .menu {
-  a {
+  .menu__link {
     color: $menu-color;
     border-color: $border-color;
     //background-color: $menu-background-color;
@@ -389,7 +378,7 @@ samp {
 
   // Nested menus.
   .menu {
-    a {
+    .menu__link {
       &:hover,
       &:focus {}
       &.active-trail {}
@@ -398,7 +387,7 @@ samp {
 }
 
 .menu__item {
-  &--active-trail > a {
+  &--active-trail > .menu__link {
     //color: $menu-active-color;
     //background-color: $menu-background-active-color;
   }
@@ -407,14 +396,14 @@ samp {
   @if $menu-arrows == true {
     &--collapsed,
     &--expanded {
-      > a:after {
+      > .menu__link:after {
         //color: $text-color;
       }
     }
   }
 
   // Add the border top to the first item only.
-  &:first-child a {
+  &:first-child .menu__link {
     border-color: $border-color;
   }
 }
@@ -446,18 +435,8 @@ samp {
  * Responsive styles are a combination of three things:
  *  1. Sass/CSS defined here (with breakpoints etc).
  *  2. jQuery: responsive-menus.js in AT Core libraries which adds/toggles classes.
- *  3. Theme settings as set in your themes Advanced extention settings.
+ *  3. Theme settings as set in your themes Advanced extension settings.
  ============================================================================ */
-
-// Aggressively force the menu to inherit the page/regions background,
-// this gives us some pretty usable styles for free.
-.rm-region,
-.rm-block,
-.rm-block * {
-  background-color: inherit;
-  color: inherit;
-}
-
 
 // Provide a consistent style for visible click handles.
 .rm-toggle {
@@ -465,12 +444,12 @@ samp {
   &__link:hover,
   &__link:focus,
   &__link:active {
-    color: $button-color;
-    background-color: $button-background-color;
+    color: $resp-menu-color;
+    background-color: $resp-menu-background-color;
   }
 
   &__icon {
-    fill: rgba(255, 255, 255, 1);
+    fill: $resp-menu-color;
   }
 
   span {
@@ -478,45 +457,31 @@ samp {
   }
 }
 
+.ms-offcanvas,
+.ms-vertical,
+.ms-slidedown,
+.ms-tiles {
+  .rm-block__content {
+    .menu {
+      .menu__link,
+      .rm-accordion-trigger {
+        color: $resp-menu-color;
+        background-color: $resp-menu-background-color;
 
-// Provide a consistent menu style across all menu types,
-// you may need to tweak some types due to the differences in layout
-// and overall design of the menu.
-.rm-block__content {
-  .menu {
-    &__item {
-      &--active-trail > a {
-        color: $resp-menu-active-color;
-        background-color: $resp-menu-active-background-color;
-      }
-    }
-
-    a {
-      color: $resp-menu-color;
-      background-color: $resp-menu-background-color;
-
-      &:after,
-      &:before {
-        color: $resp-menu-color !important;
+        &:hover,
+        &:focus {
+          color: $resp-menu-hover-color ;
+          background-color: $resp-menu-hover-background-color;
+        }
       }
 
-      &:active {
-        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-        opacity: 0.9;
-      }
-
-      &:hover,
-      &:focus {
-        color: $resp-menu-hover-color;
-        background-color: $resp-menu-hover-background-color;
-      }
-
-      &.active {
-        color: $resp-menu-active-color;
+      .menu__link.is-active {
+        color: $resp-menu-active-color ;
         background-color: $resp-menu-active-background-color;
 
         &[href="/"] {
-          background-color: transparent; // Match Drupal base path for frontpage/home links
+          color: $resp-menu-color;
+          background-color: $resp-menu-background-color;
 
           &:hover,
           &:focus {
@@ -526,45 +491,69 @@ samp {
         }
       }
     }
-  }
-}
 
-
-// Customize responsive menus for this theme.
-.ms-dropmenu {
-  .rm-block__content {
-    .menu {}
-  }
-}
-
-
-.ms-horizontal {
-  .rm-block__content {
-    .menu {}
-  }
-}
-
-
-.ms-vertical,
-.ms-slidedown {
-  .rm-block__content {
-    .menu {
-      a,
-      a.active[href="/"] {
-        color: $resp-menu-hover-color;
-        background-color: $resp-menu-hover-background-color;
-      }
+    .rm-accordion-trigger__icon {
+      background-color: transparent !important;
+      fill: $resp-menu-color;
     }
   }
+}
 
-  // Header second by default has a white background.
-  .pr-header__header-second {
-    .rm-block__content {
-      .menu {
-        a,
-        a.active[href="/"] {
-          //color: $resp-menu-hover-color;
-          background-color: rgba(0, 0, 0, 0.05);
+
+.ms-slidedown {
+  .rm-row,
+  .rm-region {
+    background-color: $slidedown-background-color;
+  }
+}
+
+
+.ms-dropmenu,
+.ms-horizontal {
+  .rm-block__content {
+    .menu-level-1 {
+      > li > span > .menu__link {
+        color: inherit;
+        background-color: transparent;
+
+        &:hover,
+        &:focus {
+          color: $resp-menu-hover-color;
+          background-color: $resp-menu-hover-background-color;
+        }
+
+        &.is-active {
+          color: $resp-menu-active-color;
+          background-color: $resp-menu-active-background-color;
+
+          &[href="/"] {
+            color: inherit;
+            background-color: transparent; // Match Drupal base path for frontpage/home links
+
+            &:hover,
+            &:focus {
+              color: $resp-menu-hover-color;
+              background-color: $resp-menu-hover-background-color;
+            }
+          }
+        }
+      }
+    }
+
+    .menu-level-2 {
+      .menu__link {
+        color: $resp-menu-color;
+        background-color: $resp-menu-background-color;
+
+        &:hover,
+        &:focus {
+          color: $resp-menu-hover-color ;
+          background-color: $resp-menu-hover-background-color;
+        }
+
+        &.is-active {
+          color: $resp-menu-active-color ;
+          background-color: $resp-menu-active-background-color;
         }
       }
     }
@@ -572,24 +561,76 @@ samp {
 }
 
 
-.ms-offcanvas {
-  .rm-block__content {
-    opacity: .001;
-    background-color: $body-background-color;
-    color: $page-background-color;
+.ms-overlay {
+  .rm-toggle {
+    background-color: rgba(0, 0, 0, 0.875);
 
-    .menu a {
-      background-color: rgba(255, 255, 255, 0.095);
+    &:hover,
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+
+    &__link,
+    &__icon {
+      background-color: transparent;
+
+      &:hover,
+      &:focus {
+        background-color: transparent;
+      }
     }
   }
-}
 
+  &.rm-is-open {
+    .rm-toggle {
+      opacity: 1;
+      background-color: white;
 
-.ms-tiles {
+      &__icon {
+        fill: black;
+      }
+    }
+  }
+
   .rm-block__content {
-    .menu-level-1 {
-      > .menu__item {
-        background-color: $resp-menu-active-background-color;
+    background-color: rgba(0, 0, 0, 0.80);
+
+    .menu {
+      background-color: transparent;
+
+      .menu__link {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.95);
+
+        &:hover,
+        &:focus,
+        &.is-active {
+          background-color: rgba(0, 0, 0, 0.75);
+        }
+
+        &.is-active {
+          &[href="/"] {
+            background-color: rgba(0, 0, 0, 0.75);
+
+            &:hover,
+            &:focus {
+              background-color: rgba(0, 0, 0, 0.75);
+            }
+          }
+        }
+      }
+
+      .rm-accordion-trigger {
+        background-color: rgba(0, 0, 0, 0.95);
+
+        &:hover,
+        &:focus {
+          background-color: rgba(0, 0, 0, 0.75);
+        }
+
+        &__icon {
+          fill: white;
+        }
       }
     }
   }
@@ -597,42 +638,41 @@ samp {
 
 
 .ms-meganav {
-  &.rm-is-open {
-    .rm-block__content {
-      .menu-level-1 > .menu__item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  .rm-block__content {
+    .menu {
+      .menu__link {
+        color: inherit;
+        background-color: transparent;
 
-        &:last-child {}
+        &:hover,
+        &:focus {
+          color: $resp-menu-hover-color;
+          background-color: $resp-menu-hover-background-color;
+        }
 
-        > span > a {
-          background-color: rgba(255, 255, 255, 0.3);
+        &.is-active {
+          //color: $resp-menu-active-color;
+          //background-color: $resp-menu-active-background-color;
         }
       }
     }
   }
-}
 
+  &.rm-is-open {
+    .rm-block__content {
+      .menu-level-1 > .menu__item {
+        border-bottom: $border-width $border-style $border-color;
 
-.ms-accordion {
-  .rm-accordion-trigger {
-    background-color: rgba(255, 255, 255, 0.095);
+        > span > .menu__link {
+          color: $resp-menu-color;
+          background-color: $resp-menu-background-color;
 
-    &:hover,
-    &:focus {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-  }
-
-  .rm-accordion-trigger__icon {
-    background-color: transparent !important;
-    fill: white;
-  }
-
-  .rm-block__content & {
-    a {
-      &:hover,
-      &:focus {
-        background-color: rgba(255, 255, 255, 0.2);
+          &:hover,
+          &:focus {
+            color: $resp-menu-hover-color;
+            background-color: $resp-menu-hover-background-color;
+          }
+        }
       }
     }
   }
@@ -784,7 +824,6 @@ input[type="week"] {
     box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1) ;
   }
 
-
   &:focus {
     border-color: $form-border-color;
     color: $form-text-focus-color;
@@ -856,6 +895,13 @@ textarea.placeholder_text {
   color: $form-text-color;
 }
 
+// Search form submit example with svg and a gradient.
+//.search-block-form__form .form-submit {
+//  background-image:
+//    url(../images/search-icon.svg),
+//    linear-gradient(to bottom, lighten($button-background-color, $lighten-most), $button-background-color);
+//}
+
 
 /**
  * Form Theme
@@ -873,35 +919,6 @@ textarea.placeholder_text {
     }
   }
 }
-
-
-// Dialog stuff needs an override to look OK.
-.ui-dialog {
-  .form-text {
-    background-color: inherit !important;
-    color: black !important;
-    border-color: silver !important;
-
-    &::placeholder {
-      color: silver;
-    }
-  }
-
-  .form-type-radio,
-  .form-type-checkbox {
-    label.option {
-      border-color: transparent;
-      background-color: inherit;
-
-      &:focus,
-      &:hover {
-        color: inherit;
-        background-color: inherit;
-      }
-    }
-  }
-}
-
 
 // Filters and tips
 .filter-wrapper {
@@ -1029,6 +1046,7 @@ button,
 // Danger button, e.g. delete buttons often have this class.
 .button--danger {
   @include button-variant($error-text-color, transparent, false, 0, transparent, none);
+  box-shadow: none;
 }
 
 
@@ -1123,6 +1141,83 @@ button.link-edit-summary {
 
 
 /**
+ * Modal dialogs.
+ *  -  override jQuery UI styles.
+ ============================================================================ */
+
+.ui-widget-overlay {
+  background: rgba(0, 0, 0, 0.95);
+  opacity: 0.3;
+}
+
+.ui-dialog {
+  .form-text {
+    background-color: inherit !important;
+    color: black !important;
+    border-color: silver !important;
+
+    //noinspection CssInvalidPseudoSelector
+    &::placeholder {
+      color: silver;
+    }
+  }
+
+  .form-type-radio,
+  .form-type-checkbox {
+    label.option {
+      border-color: transparent;
+      background-color: inherit;
+
+      &:focus,
+      &:hover {
+        color: inherit;
+        background-color: inherit;
+      }
+    }
+  }
+
+  .ui-dialog-titlebar {
+    color: $text-color;
+  }
+
+  .ui-dialog-buttonpane {
+    button {
+      color: $button-color;
+      background: $button-background-color;
+      border-color: $button-border-color;
+      opacity: 0.9;
+
+      @if $button-box-shadow == true {
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+      }
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+        color: $button-hover-color;
+        background: $button-background-hover-color;
+      }
+
+      &:visited {
+        color: $button-color;
+        background: $button-background-color;
+      }
+
+      &[disabled] {
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .button--primary {
+      @include button-variant($button-primary-text-color, $button-primary-background-color, true, $button-border-width, $button-primary-border-color, $button-border-style);
+    }
+  }
+}
+
+
+/**
  * File icons
  * AT un-sets Drupal core file field CSS for image icons and replaces them
  * with FontAwesome icons.
@@ -1130,17 +1225,29 @@ button.link-edit-summary {
 
 .file {
   a:before {
-    color: $text-color;
+    color: $text-color-light;
   }
 }
 
 
 /**
- * Image upload widget.
+ * File upload widgets.
  ============================================================================ */
 
-.image-preview {
-  background-color: transparent;
+.field--widget-file-generic,
+.field--widget-image-image {
+  background-color: $node-teaser-background-color;
+  border-color: $border-color;
+
+  details {
+    background: transparent;
+  }
+}
+
+.field--widget-image-image {
+  .image-preview {
+    background-color: transparent;
+  }
 }
 
 
@@ -1251,6 +1358,31 @@ body {
     //border-color: $border-color-light;
   }
 }
+
+
+/**
+ * Node Add Edit Forms.
+ ============================================================================ */
+
+.layout-node-form {}
+.layout-region-node-main,
+.layout-region-node-secondary {}
+
+
+.layout-region-node-secondary__inner {
+  border-color: $border-color;
+  background-color: $node-teaser-background-color;
+
+  .entity-meta details[open] {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.085);
+
+    > summary {
+      background-color: rgba(0, 0, 0, 0.025);
+      //background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.045), $row-background-color-lite);
+    }
+  }
+}
+
 
 
 /**
@@ -1384,9 +1516,7 @@ body {
   color: $text-color !important;
 }
 
-.cke_reset,
 .cke_editable,
-.cke_editable *,
 textarea.cke_source,
 .cke_combopanel {
   background-color: $node-background-color !important;

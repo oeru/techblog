@@ -6,33 +6,30 @@
  * template html markup and selectors.
  ============================================================================ */
 .field {
-  margin-bottom: 16px;
   margin-bottom: 1rem;
 }
 
 .field__label {
   font-family: inherit;
   font-weight: 600;
-  font-size: 16px;
   font-size: 1rem;
-  line-height: 21px;
-  line-height: 1.3125rem;
   margin: 0;
 }
 
 .field-label-inline .field__label {
   margin: 0;
   display: inline-block;
-  padding: 0 4px 0 0;
-  padding: 0 0.25rem 0 0;
+  padding: 0 0.375rem 0 0;
 }
+
 .field-label-inline .field__label:after {
   content: ":";
 }
+
 [dir="rtl"] .field-label-inline .field__label {
-  padding: 0 0 0 4px;
-  padding: 0 0 0 0.25rem;
+  padding: 0 0 0 0.375rem;
 }
+
 .field-label-inline .field__items,
 .field-label-inline .field__item {
   display: inline-block;
@@ -50,58 +47,34 @@
   margin: 0;
   padding: 0;
 }
+
 .field-type-image figure {
-  margin-bottom: 16px;
   margin-bottom: 1rem;
 }
-.field-type-image .align-left {
-  margin: 0 16px 16px 0;
-  margin: 0 1rem 1rem 0;
-}
-.field-type-image .align-none figcaption,
-.field-type-image .align-left figcaption {
-  text-align: left;
-}
-.field-type-image .align-center {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 16px;
-  margin-bottom: 1rem;
-}
-.field-type-image figure.align-center {
-  display: block;
-}
-.field-type-image .align-right {
-  margin: 0 0 16px 16px;
-  margin: 0 0 1rem 1rem;
-}
-.field-type-image .align-right figcaption {
-  text-align: left;
-}
+
 .field-type-image .float-none {
   float: none !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
+
 .field-type-image + .field-type-image .field__label {
   clear: both;
 }
 
-@media all and (max-width: 45em) {
+@media screen and (max-width: 45em) {
   .field-type-image [class*="align-"] {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     float: none;
-    margin-bottom: 16px;
     margin-bottom: 1rem;
   }
-
   .field-type-image figure[class*="align-"] {
     display: block;
   }
 }
+
 /**
  * File icons
  *  - AT unsets Drupal core file field CSS for image icons and replaces them
@@ -110,6 +83,7 @@
 .file {
   display: block;
 }
+
 .file a {
   text-decoration: none;
   word-break: break-all;
@@ -117,13 +91,14 @@
       -ms-hyphens: auto;
           hyphens: auto;
 }
+
 .file a:before {
   font-family: FontAwesome, sans-serif;
   content: "";
-  padding-right: 7px;
-  padding-right: 0.4375rem;
+  padding-right: 0.5rem;
   display: none;
 }
+
 .fa-loaded .file a:before {
   display: inline-block;
 }
@@ -192,15 +167,19 @@
   content: "";
 }
 
+.form-managed-file .file {
+  background-image: none;
+  padding-left: 0;
+}
+
 /**
  * Field Language Display
  ============================================================================ */
 [id*="field-language-display"] {
-  margin-bottom: 16px;
   margin-bottom: 1rem;
 }
+
 [id*="field-language-display"] .form-item {
   margin: 0;
 }
-
-/*# sourceMappingURL=maps/field.css.map */
+/*# sourceMappingURL=field.css.map */

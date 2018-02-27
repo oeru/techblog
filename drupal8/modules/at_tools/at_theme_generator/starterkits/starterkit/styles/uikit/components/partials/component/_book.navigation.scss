@@ -3,44 +3,76 @@
  *  - Set styles for book navigation and the menu tree.
  ============================================================================ */
 
+// Wrapper.
+.book-navigation {
+  &.has-tree {}
+  &.has-links {}
+}
+
 // Menu tree in book navigation links.
 .menu--book-tree {
+  @include output-rhythm(margin-bottom, $medium);
+
   .menu__item {
-    a {}
+    a {
+      margin-top: 0;
+    }
   }
 }
 
-
+// Pager links.
 .book-pager {
-  padding: 0;
+  @include output-rhythm(padding, $medium 0);
+  text-align: center;
   overflow: auto;
   border-top: $border-width $border-style $border-color;
   border-bottom: $border-width $border-style $border-color;
 
-  // Book navigation menu tree is showing.
-  .has-tree & {
-    border-top: 0;
+  display: flex;
+  flex-direction: column;
+
+  @media #{$tablet} {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
+
+  // Book navigation menu tree is showing. This usually occurs on the
+  // book parent.
+  .has-tree & {}
+
+  // has list items classes.
+  .has-prev {}
+  .has-next {}
+  .has-parent {}
 
   // Items.
   &__item {
     list-style: none;
     vertical-align: top;
+    width: 100%;
+    margin-bottom: 2px; // touch target separation
   }
 
   // Link.
   &__link {
-    @include output-rhythm(padding, $xx-small 0);
+    @include output-rhythm(padding, 4px);
     display: inline-block;
+    position: relative;
 
     &:before,
     &:after {
+      text-align: center;
       font-family: $icon-font;
-      
+      position: absolute;
+      top: 0;
+      @include output-rhythm(padding-top, 4px);
+      @include output-rhythm(width, $medium);
+
       // Wait for FontAwesome to load.
       display: none;
       .fa-loaded & {
-        display: inline-block;
+        display: inline-block !important;
       }
 
       [dir="rtl"] & {
@@ -52,36 +84,58 @@
   // Use the maximum width by incorporating a more complex layout
   // of floats and box-sizing.
   &__previous {
-    text-align: $flow-from;
-    float: $flow-from;
-    width: 46%;
+    @media #{$mobile-isolate} {
+      order: 2;
+    }
 
-    a {
+    @media #{$tablet} {
+      text-align: $flow-from;
+      margin-#{$flow-to}: auto;
+      width: 46%;
+    }
+
+    a.book-pager__link {
+      @include output-rhythm(padding-#{$flow-from}, $medium * 1.5);
+
       &:before {
         content: $menu-arrow-left;
-        @include output-rhythm(width, $medium);
+        #{$flow-from}: 0;
       }
     }
   }
 
   // Up.
   &__up {
-    text-align: center;
-    float: $flow-from;
-    width: 8%;
+    @media #{$mobile-isolate} {
+      order: 1;
+    }
+
+    @media #{$tablet} {
+      text-align: center;
+      width: 8%;
+    }
   }
 
   // Next
   &__next {
-    text-align: $flow-to;
-    float: $flow-to;
-    width: 46%;
+    @media #{$mobile-isolate} {
+      order: 3;
+    }
 
-    a {
+    @media #{$tablet} {
+      text-align: $flow-to;
+      margin-#{$flow-from}: auto;
+      width: 46%;
+    }
+
+    a.book-pager__link {
+      @include output-rhythm(padding-#{$flow-to}, $medium * 1.5);
+
       &:after {
         content: $menu-arrow-right;
-        @include output-rhythm(width, $medium);
+        #{$flow-to}: 0;
       }
     }
   }
 }
+

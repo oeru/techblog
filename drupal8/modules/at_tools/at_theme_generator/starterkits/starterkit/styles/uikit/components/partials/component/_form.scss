@@ -20,9 +20,61 @@
 }
 
 
-// Align selects with others if they are short.
+// Cross browser selects, we hope.
+.form-type-select__select-wrapper {
+  &:not(.is-multiple) {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &:after {
+      font-family: $icon-font;
+      content: "\f0dc";
+      position: absolute;
+      @include output-rhythm(top, $medium * 0.25);
+      @include output-rhythm(#{$flow-to}, $medium * 0.75);
+      pointer-events: none;
+      display: none;
+      //z-index: 2;
+    }
+  }
+
+  &.is-multiple {
+    display: block;
+  }
+}
+
 .form-select {
   min-width: 50%;
+	margin: 0;
+  font-size: 16px; // Font size must be 16px to prevent iOS page zoom on focus
+}
+
+// Firefox <= 34 has a false positive on @supports( -moz-appearance: none )
+// @supports ( mask-type: alpha ) is Firefox 35+
+@supports (-webkit-appearance: none) or (appearance: none) or ((-moz-appearance: none) and (mask-type: alpha)) {
+	.form-type-select__select-wrapper {
+    &:not(.is-multiple) {
+      &:after {
+        // Wait for FontAwesome to load.
+        .fa-loaded & {
+          display: block;
+        }
+      }
+
+      .form-select {
+        @include output-rhythm(text-indent, 3px);
+        @include output-rhythm(padding-#{$flow-to}, $medium * 1.5);
+        @include output-rhythm(margin-right, $medium / 2);
+
+        border-width: $border-width;
+        border-style: $border-style;
+        appearance: none;
+
+        &:focus {}
+      }
+    }
+  }
 }
 
 
@@ -40,16 +92,9 @@
 // http://uxmovement.com/forms/ways-to-make-checkboxes-radio-buttons-easier-to-click/
 .form-type-radio,
 .form-type-checkbox {
-  @include output-rhythm(margin-#{$flow-from}, $xxx-small);
-
   .option {
-    @include output-rhythm(padding, $xxxx-small $xx-small $xxxx-small $xx-large);
-    @include output-rhythm(margin-#{$flow-from}, -30px);
-    @include output-rhythm(min-height, $xx-large);
-
-    min-width: 50%;
-    border: $form-border-width $form-border-style;
-    border-radius: $form-border-radius;
+    @include output-rhythm(padding, $xxxx-small $xx-small);
+    border-radius: $border-radius;
 
     &:focus,
     &:hover {
@@ -61,45 +106,16 @@
 }
 
 
-// UI Dialog are buggered by the above radical styles... fix it.
-.ui-dialog {
-  @include output-rhythm(margin, $xxx-small);
-
-  .form-type-radio,
-  .form-type-checkbox {
-    display: block;
-
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    .option {
-      @include output-rhythm(padding, $xxxx-small);
-      min-width: 0;
-      border: none;
-      border-radius: 0;
-    }
-  }
-
-  .form-type-radio.js-form-item-attributes-data-align {
-    float: $flow-from;
-    @include output-rhythm(margin-#{$flow-to}, 12px);
-  }
-
-  .container-inline label:after {
-    content: '';
-  }
-
-  .form-file {
-    @include output-rhythm(padding, $xx-small 0);
-  }
-}
-
-
 // Actions.
 .form-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   @include output-rhythm(margin, $medium 0);
+
+  .button {
+    @include output-rhythm(margin-#{$flow-to}, 4px);
+  }
 }
 
 
@@ -134,12 +150,38 @@
 .filter-wrapper {
   border: $form-border-width $form-border-style;
   border-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  .form-type-select__select-wrapper,
+  .form-type-select__select-wrapper select {
+    width: auto !important;
+  }
 }
 
 
-// Tips (filter tips help page)
+// Filter guidelines
+.filter-guidelines {
+  flex: 0 0 100%;
+
+  .filter-guidelines-item {
+    @include output-rhythm(margin, $small 0);
+  }
+}
+
+
+.filter-help {
+  float: none;
+  margin-#{$flow-to}: auto;
+  @include output-rhythm(font-size, $medium * 0.875);
+}
+
+
 .tips {
   padding-#{$flow-from}: 0;
+  @include output-rhythm(font-size, $medium * 0.875);
 
   li {
     list-style: none;
@@ -149,7 +191,7 @@
 
 // Descriptions.
 .description {
-  @include adjust-font-size-to($small);
+  @include output-rhythm(font-size, $small);
 }
 
 
@@ -165,18 +207,21 @@ h4.label,
 
 // Form required.
 .form-required:after {
-  content: " \204E "; // Use a Unicode symbol to prevent screen readers from announcing the text.
+  font-family: $base-font-family; // protect the asterisk from webfonts etc.
+  content: " \002A ";
   line-height: 1;
-  vertical-align: super;
 }
 
 
-// abbr usesage in drupal forms.
+// abbr in drupal forms, often used to indicate a state change.
 abbr {
   &.form-required,
-  &.tabledrag-changed,
   &.ajax-changed {
     border-bottom: none;
+  }
+
+  &.tabledrag-changed {
+    @include visually-hidden;
   }
 }
 
@@ -193,7 +238,13 @@ abbr {
 
 // Container inline.
 .container-inline {
-  display: inline-block;
+  display: flex;
+
+  div,
+  label {
+    display: flex;
+    @include output-rhythm(margin-#{$flow-to}, $xxx-small);
+  }
 
   label:after {
     content: ':';
@@ -203,6 +254,11 @@ abbr {
   &.form-actions {
     margin-top: 0;
     margin-bottom: 0;
+  }
+
+  // YAML module support
+  .yamlform-flex--container > .form-item {
+    @include output-rhythm(margin-#{$flow-to}, $xxx-small);
   }
 }
 
@@ -251,61 +307,6 @@ abbr {
     .form-item {
       margin-#{$flow-to}: 1.25em;
     }
-  }
-}
-
-
-// Fields in forms.
-form {
-  // Form field image
-  .field-type-image {
-    .image-preview {
-      padding: 0;
-      background: transparent;
-      @include output-rhythm(margin, 0 $medium $medium 0);
-
-      // RTL
-      [dir="rtl"] & {
-        @include output-rhythm(margin, 0 0 $medium $medium);
-      }
-    }
-
-    .image-widget-data {
-      > div:first-child {
-        margin-top: 0;
-      }
-    }
-  }
-
-  // Table drag styles.
-  .field-edit-link {
-    margin: 0 0.3em;
-  }
-
-  .field-multiple-table {
-    margin: 0;
-
-    .field-multiple-drag {
-      width: 30px;
-      padding-right: 0;
-
-      .tabledrag-handle {
-        padding-right: .5em;
-      }
-
-      // RTL for table drag.
-      [dir="rtl"] & {
-        padding-left: 0;
-
-        .tabledrag-handle {
-          padding-left: .5em;
-        }
-      }
-    }
-  }
-
-  .field-add-more-submit {
-    margin: .5em 0 0;
   }
 }
 

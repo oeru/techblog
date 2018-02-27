@@ -38,14 +38,14 @@ class DirectoryOperations {
    */
   public function directoryRecursiveCopy($source, $target, $ignore = '/^(\.(\.)?|CVS|\.sass-cache|\.svn|\.git|\.DS_Store)$/') {
     $dir = opendir($source);
-    @mkdir($target);
+    file_prepare_directory($target, FILE_CREATE_DIRECTORY);
     while($file = readdir($dir)) {
       if (!preg_match($ignore, $file)) {
         if (is_dir($source . '/' . $file)) {
           self::directoryRecursiveCopy($source . '/' . $file, $target . '/' . $file, $ignore);
         }
         else {
-          copy($source . '/' . $file, $target . '/' . $file);
+          file_unmanaged_copy($source . '/' . $file, $target . '/' . $file, FILE_EXISTS_RENAME);
         }
       }
     }
@@ -64,7 +64,7 @@ class DirectoryOperations {
       return false;
     }
     if (is_file($directory)) {
-      return unlink($directory);
+      return \Drupal::service('file_system')->unlink($directory);
     }
 
     $dir = dir($directory);
@@ -76,7 +76,7 @@ class DirectoryOperations {
     }
     $dir->close();
 
-    return rmdir($directory);
+    return \Drupal::service('file_system')->rmdir($directory);
   }
 
   /**
@@ -87,7 +87,7 @@ class DirectoryOperations {
    * Files below the path.
    */
   public function directoryScan($path) {
-    $scan_directories = array();
+    $scan_directories = [];
     if (file_exists($path)) {
       $scan_directories = preg_grep('/^([^.])/', scandir($path));
     }
@@ -103,11 +103,11 @@ class DirectoryOperations {
    * Directories & files below the path.
    */
   public function directoryScanRecursive($path) {
-    $scan_directories_recursive = array();
+    $scan_directories_recursive = [];
     $path_directory = scandir($path);
 
     foreach ($path_directory as $key => $value) {
-      if (!in_array($value,array(".", ".."))) {
+      if (!in_array($value, [".", ".."])) {
         if (is_dir($path . '/' . $value)) {
           $scan_directories_recursive[$value] = self::directoryScanRecursive($path . '/' . $value);
         }
@@ -129,7 +129,7 @@ class DirectoryOperations {
    * @return array globbed files
    */
   public function directoryGlob($path, array $types) {
-    $files = array();
+    $files = [];
     $scan_directories = self::directoryScan($path);
     if (isset($scan_directories)) {
       foreach ($scan_directories as $directory) {

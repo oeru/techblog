@@ -13,7 +13,6 @@
 
 button,
 .button {
-  max-width: 100%;
   width: auto;
   position: relative;
   box-sizing: border-box;
@@ -37,6 +36,14 @@ button,
   &[disabled] {
     &:hover {}
   }
+}
+
+
+// Button styles for things that are not actually button elements.
+a.button {
+  display: inline-block;
+  text-align: center;
+  @include output-rhythm(line-height, $form_input_button_select_height);
 }
 
 
@@ -67,9 +74,7 @@ button,
 // Danger button, e.g. delete buttons often have this class.
 .button--danger {
   border: 0;
-  float: $flow-to;
-  position: relative;
-  @include output-rhythm(top, 3px);
+  box-shadow: none;
 }
 
 // Action button
@@ -82,7 +87,7 @@ button,
     font-family: $icon-font;
     content: $button-action-icon;
     vertical-align: middle;
-    @include font-size($small);
+    @include output-rhythm('font-size', $small);
     @include output-rhythm(padding-#{$flow-to}, 4px);
     @include output-rhythm(line-height, $form_input_button_select_height);
 
@@ -97,7 +102,7 @@ button,
   &[data-drupal-link-system-path="user/login"]:before {
     content: $button-action-login-icon;
     vertical-align: baseline;
-    @include font-size($medium);
+    @include output-rhythm('font-size', $medium);
     @include output-rhythm(padding-#{$flow-to}, 7px);
   }
 }
@@ -153,7 +158,7 @@ li[class*="action--"] {
     > * {
       white-space: nowrap;
       line-height: normal; // some drop buttons are links
-      @include output-rhythm(padding, 0 $x-small);
+      //@include output-rhythm(padding, 0 $x-small);
     }
 
     a {
@@ -202,6 +207,8 @@ li[class*="action--"] {
 
 
 // Dropbutton Multiple
+
+// .dropbutton-multiple .dropbutton .dropbutton-action .button
 .dropbutton-multiple {
   .dropbutton {
     border-right: $button-border-width $button-border-style;
@@ -214,6 +221,8 @@ li[class*="action--"] {
     .dropbutton-action .button {
       border-radius: $button-border-radius 0 0 $button-border-radius;
       width: 100%;
+      border: 0;
+      margin: 0;
     }
 
     // RTL
@@ -290,6 +299,12 @@ label button.link {
       color: #292929 !important;
     }
   }
+}
+
+
+// Table drag weight button.
+.tabledrag-toggle-weight {
+  @include output-rhythm(font-size, $medium * 0.75);
 }
 
 

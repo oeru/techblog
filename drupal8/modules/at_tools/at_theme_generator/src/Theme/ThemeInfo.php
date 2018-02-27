@@ -27,28 +27,30 @@ class ThemeInfo {
    * Looks for all themes with a base theme value of 'at_core' and returns
    * the list. This means you cannot sub-theme a "skin" type sub-theme.
    *
+   * @param $subtheme_type
    * @return array
    */
-  public function baseThemeOptions() {
-    $base_themes = array();
-    foreach ($this->data as $machine_name => $info) {
-      foreach ($info as $info_key => $info_values) {
-        if ($info_key == 'base_themes') {
-          foreach ($info_values as $value_key => $value_values) {
-            if ($value_key == 'at_core') {
-              $base_themes[$machine_name] = $machine_name;
-            }
+  public function themeOptions($subtheme_type) {
+    $base_themes = [];
+    foreach ($this->data as $machine_name => $theme) {
+      foreach ($theme as $theme_key => $theme_values) {
+        if ($theme_key === 'info') {
+          if (isset($theme_values['subtheme type']) && $theme_values['subtheme type'] === $subtheme_type) {
+            $base_themes[$machine_name] = $machine_name;
           }
         }
       }
     }
-    // These are just generator "templates, not to be used directly.
+
+    // These are just generator "templates, not to be used directly. BC.
     unset($base_themes['at_standard']);
     unset($base_themes['at_minimal']);
     unset($base_themes['at_skin']);
     unset($base_themes['at_starterkit']);
     unset($base_themes['at_generator']);
     unset($base_themes['THEMENAME']);
+    unset($base_themes['STARTERKIT']);
+    unset($base_themes['SKIN']);
 
     return $base_themes;
   }

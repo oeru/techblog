@@ -5,6 +5,9 @@
  ============================================================================ */
 
 .addtoany_list {
+  display: block;
+  @include output-rhythm(margin-bottom, $medium);
+
   > a {
     @include output-rhythm(padding, 0 2px);
 

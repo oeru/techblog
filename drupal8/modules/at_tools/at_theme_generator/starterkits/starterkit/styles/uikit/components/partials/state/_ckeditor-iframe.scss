@@ -8,7 +8,7 @@ html {
 
 body {
   font-family: $base-font-family;
-  @include adjust-font-size-to($medium);
+  @include output-rhythm(font-size, $medium);
   @include output-rhythm(padding, $small);
 }
 
@@ -17,9 +17,7 @@ textarea {
   opacity: 0;
 }
 
-.cke_reset,
 .cke_editable,
-.cke_editable *,
 .cke_source {
   background-color: inherit !important;
   color: inherit !important;

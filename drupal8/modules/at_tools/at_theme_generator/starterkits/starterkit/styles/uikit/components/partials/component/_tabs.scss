@@ -11,7 +11,7 @@
   @include output-rhythm(margin, $medium 0);
 
   ul {
-    @include clearfix-micro;
+    @include cfm;
     @include output-rhythm(margin-bottom, $medium);
     padding: 0;
 

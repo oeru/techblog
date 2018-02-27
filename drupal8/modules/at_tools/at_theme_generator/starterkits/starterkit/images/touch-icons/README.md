@@ -1,13 +1,9 @@
 # Touch Icons
 
-Included by default are four touch icon files, which you can edit or
-replace if using touch icons (see your theme settings, under Extensions).
+Included is a generic set of icons to cover most iOS and Android devices.
 
-The icons are generic and were built using http://appicontemplate.com/
+Each icon has a setting in the Touch icon extension.
 
-- images/touch-icons/default-60x60.png
-- images/touch-icons/ipad-standard-76x76.png
-- images/touch-icons/iphone-retina-120x120.png
-- images/touch-icons/ipad-retina-152x152.png
-
+Please see this excellent article on touch icons for more info:
+https://mathiasbynens.be/notes/touch-icons
 

@@ -24,7 +24,7 @@
   }
 
   &__message {
-    @include adjust-font-size-to($small);
+    @include output-rhythm(font-size, $small);
 
     em:after {
       font-family: $icon-font;

@@ -12,13 +12,4 @@
 .fa-unavailable .fa {
   display: none;
 }
-
-/* Web font smoothing */
-:after,
-:before {
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/*# sourceMappingURL=maps/webfonts.css.map */
+/*# sourceMappingURL=webfonts.css.map */

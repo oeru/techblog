@@ -26,13 +26,18 @@
  *  2. jQuery: at.responsiveMenus.js which adds/toggles classes etc.
  *  3. Theme settings as set in your themes extension settings.
  ============================================================================ */
+.rm-row {
+  z-index: 100;
+}
+
 .rm-region {
-  padding: 0;
   margin: 0;
 }
+
 .rm-region .contextual-region {
   position: static;
 }
+
 .rm-region .contextual-region .contextual {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -43,76 +48,82 @@
   word-wrap: normal;
   font: 0/0 a;
 }
-.rm-region [class*='is-vertical-'] {
-  position: absolute;
-  z-index: 480;
-}
-
-.ms-vertical .rm-toggle {
-  display: none;
-}
 
 .rm-toggle {
-  font-size: 16px;
   font-size: 1rem;
-  line-height: 21px;
-  line-height: 1.3125rem;
-  padding: 7px 16px;
-  padding: 0.4375rem 1rem;
+  padding: 0.3125rem 0;
   margin: 0;
 }
+
 .rm-toggle__link, .rm-toggle__link:hover, .rm-toggle__link:focus, .rm-toggle__link:active {
-  padding: 8px 16px 4px 12px;
   padding: 0.5rem 1rem 0.25rem 0.75rem;
   height: auto;
   border-radius: 2px;
   cursor: pointer;
 }
+
 .rm-toggle__icon {
   position: relative;
-  height: 16px;
   height: 1rem;
-  width: 16px;
   width: 1rem;
 }
+
 .rm-toggle__label {
-  top: -2px;
   top: -0.125rem;
   position: relative;
+}
+
+.rm-block {
+  line-height: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+}
+
+.rm-block__inner {
+  width: 100%;
 }
 
 .rm-block__content .menu {
   position: relative;
 }
+
 .rm-block__content .menu > .menu__item {
   z-index: 490;
   position: relative;
 }
+
 .rm-block__content__item {
   position: relative;
-  vertical-align: middle;
-  font-size: 16px;
   font-size: 1rem;
-  line-height: 21px;
-  line-height: 1.3125rem;
 }
-.rm-block__content__item:first-child a {
+
+.rm-block__content__item:first-child .menu__link {
   border-top: 0;
 }
-.rm-block__content a {
+
+.rm-block__content .menu__link {
+  -webkit-transition: all, 225ms, ease-in-out;
+  -o-transition: all, 225ms, ease-in-out;
   transition: all, 225ms, ease-in-out;
   font-weight: 300;
   margin: 0;
   border: 0;
 }
-.rm-block__content a:hover, .rm-block__content a:focus {
+
+.rm-block__content .menu__link:hover, .rm-block__content .menu__link:focus {
   text-decoration: none;
 }
 
-.no-js .rm-block a {
-  padding: 7px;
-  padding: 0.4375rem;
-  margin: 1px 0;
+.no-js .rm-block .menu__link {
+  padding: 0.5rem;
   margin: 0.0625rem 0;
 }
 
@@ -121,5 +132,4 @@
   margin: 0;
   padding: 0;
 }
-
-/*# sourceMappingURL=maps/responsive-menus.css.map */
+/*# sourceMappingURL=responsive-menus.css.map */

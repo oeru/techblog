@@ -5,10 +5,12 @@
 .image-align-left .field-type-image__figure {
   float: left;
 }
+
 .image-align-right img,
 .image-align-right .field-type-image__figure {
   float: right;
 }
+
 .image-align-center img,
 .image-align-center .field-type-image__figure {
   text-align: center;
@@ -16,11 +18,13 @@
   margin-right: auto;
   display: block;
 }
+
 .image-spaceless img,
 .image-spaceless .field-type-image__figure {
   margin: 0;
   padding: 0;
 }
+
 .image-full-width img,
 .image-full-width .field-type-image__figure {
   width: 100%;
@@ -34,8 +38,8 @@
 [class*="image-align-"] {
   clear: both;
 }
+
 [class*="image-align-"] img {
   display: block;
 }
-
-/*# sourceMappingURL=maps/shortcodes--image-styles.css.map */
+/*# sourceMappingURL=shortcodes--image-styles.css.map */

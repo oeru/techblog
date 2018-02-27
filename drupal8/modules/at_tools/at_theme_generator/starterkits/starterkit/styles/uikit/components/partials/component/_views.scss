@@ -11,24 +11,168 @@
 .views-row {}
 
 
-// Grid view overrides.
-.views-view-grid  {
-  .views-col {
-    @include output-rhythm(padding-#{$flow-to}, $large);
-    @include output-rhythm(margin-bottom, $large);
+// Some core views, not exhaustive.
+.view-frontpage {}
+.view-taxonomy-term {}
 
-    box-sizing: border-box;
 
-    &:last-child {
-      padding-#{$flow-to}: 0;
-    }
+// Item lists
+.view-content {
+  .item-list > ul {
+    padding: 0;
   }
 }
 
 
-// Some core views, not exhaustive.
-.view-frontpage {}
-.view-taxonomy-term {}
+// Grid view overrides.
+.views-view-grid  {
+
+  .views-row {
+    margin-bottom: 1.25em;
+  }
+
+  &.horizontal {
+    @media #{$mobile} {
+      .views-col {
+        margin-bottom: 1.25em;
+
+         &:last-child {
+           margin-bottom: 0;
+         }
+       }
+     }
+
+     @media #{$tablet-isolate}, #{$wide} {
+      .views-row {
+        display: flex;
+        margin-left: -0.625em;
+        margin-right: -0.625em;
+      }
+
+      .views-col {
+        flex: 0 0 100%;
+        padding: 0 0.625em;
+      }
+    }
+  }
+
+  &.vertical {
+    @media #{$tablet-isolate}, #{$wide} {
+      display: flex;
+      margin-left: -0.625em;
+      margin-right: -0.625em;
+
+      .views-col {
+        flex: 0 0 100%;
+        padding: 0 0.625em;
+      }
+    }
+  }
+
+  @media #{$tablet-isolate}, #{$wide} {
+    .views-col {
+      flex: 0 0 100%;
+      padding: 0 0.625em;
+    }
+  }
+
+  @media #{$tablet-isolate} {
+    &.cols-2,
+    &.cols-4,
+    &.cols-5 {
+      .views-col {
+        flex-basis: span(6 of 12);
+      }
+    }
+
+    &.cols-3,
+    &.cols-6,
+    &.cols-8,
+    &.cols-10,
+    &.cols-12 {
+      .views-col {
+        flex-basis: span(4 of 12);
+      }
+    }
+  }
+
+  @media #{$wide} {
+    &.cols-2 {
+      .views-col {
+        flex-basis: span(6 of 12);
+      }
+    }
+
+    &.cols-3 {
+      .views-col {
+        flex-basis: span(4 of 12);
+      }
+    }
+
+    &.cols-4 {
+      .views-col {
+        flex-basis: span(3 of 12);
+      }
+    }
+
+    &.cols-6 {
+      .views-col {
+        flex-basis: span(2 of 12);
+      }
+    }
+
+    &.cols-12 {
+      .views-col {
+        flex-basis: span(1 of 12);
+      }
+    }
+
+    @include nested($container-8) {
+      &.cols-8 {
+        .views-col {
+          flex-basis: span(1 of 8);
+        }
+      }
+    }
+
+    @include nested($container-10) {
+      &.cols-5 {
+        .views-col {
+          flex-basis: span(2 of 10);
+        }
+      }
+      &.cols-10 {
+        .views-col {
+          flex-basis: span(1 of 10);
+        }
+      }
+    }
+  }
+
+  // Reset nodes.
+  .node {
+    margin-bottom: 0;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+
+// Table style column align (from core views.module.css).
+.views-align {
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+
+  &-center {
+    text-align: center;
+  }
+}
 
 
 // View is empty, but has message etc.
@@ -69,7 +213,7 @@
         font-family: $icon-font;
         content: $button-action-icon;
         vertical-align: middle;
-        @include font-size($small);
+        @include output-rhythm('font-size', $small);
         @include output-rhythm(padding-#{$flow-to}, 4px);
         @include output-rhythm(line-height, $form_input_button_select_height);
 
@@ -82,4 +226,25 @@
     }
   }
 }
+
+
+// Recent Content
+.view-comments-recent,
+.view-content-recent {
+  .item-list__item {
+    @include output-rhythm(margin-bottom, $x-small);
+
+    span {
+      display: block;
+    }
+
+    .views-field-title {}
+
+    .views-field-changed {
+      @include output-rhythm('font-size', $medium * 0.75);
+      line-height: 1;
+    }
+  }
+}
+
 

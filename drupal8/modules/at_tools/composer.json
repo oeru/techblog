@@ -1,26 +1,23 @@
 {
-    "name": "drupal/at_tools",
-    "type": "drupal-module",
-    "description": "Tools to support Adaptivetheme and sub-themes.",
-    "keywords": ["theme", "base theme", "drupal", "adaptivetheme"],
-    "license": "GPL-2.0+",
-    "homepage": "https://www.drupal.org/project/at_tools",
-    "minimum-stability": "dev",
-    "support": {
-        "issues": "http://drupal.org/project/issues/at_tools",
-        "source": "https://www.drupal.org/project/at_tools"
-    },
-    "authors": [
-        {
-            "name": "Jeff Burnz",
-            "homepage": "http://adaptivethemes.com/",
-            "role": "Maintainer"
-        }
-    ],
-    "repositories": {
-        "drupal": {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        }
+  "name": "drupal/at_tools",
+  "description": "Tools to support Adaptivetheme 8.x and sub-themes, includes the AT Theme Generator.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/at_tools",
+  "authors": [
+    {
+      "name": "Jeff Burnz",
+      "homepage": "http://adaptivethemes.com",
+      "role": "Maintainer"
     }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/at_tools",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "http://git.drupal.org/project/at_tools.git"
+  },
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/adaptivetheme": "8.*"
+  }
 }

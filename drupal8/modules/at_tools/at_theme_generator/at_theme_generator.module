@@ -15,8 +15,8 @@ function at_theme_generator_help($route_name) {
     case 'help.page.at_theme_generator':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<br/>' . t('The <a href="@attools">AT Theme Generator</a> (packaged with AT Tools) allows you to generate new <a href="@at">Adaptivetheme</a> sub-themes and clone existing AT sub-themes.', array('@attools' => 'https://www.drupal.org/project/at_tools', '@at' => 'https://www.drupal.org/project/adaptivetheme'));
-      $output .= '<br/>' . t('Please see the online documentation <a href="@docs">docs.adaptivethemes.com</a> for detailed instructions on how to use the theme generator.',  array('@docs' => '//docs.adaptivethemes.com/theme-generator/'));
+      $output .= '<br/>' . t('The <a href="@attools">AT Theme Generator</a> (packaged with AT Tools) allows you to generate new <a href="@at">Adaptivetheme</a> sub-themes and clone existing AT sub-themes.', ['@attools' => 'https://www.drupal.org/project/at_tools', '@at' => 'https://www.drupal.org/project/adaptivetheme']);
+      $output .= '<br/>' . t('Please see the online documentation <a href="@docs">docs.adaptivethemes.com</a> for detailed instructions on how to use the theme generator.',  ['@docs' => '//docs.adaptivethemes.com/theme-generator/']);
       return $output;
   }
 }
